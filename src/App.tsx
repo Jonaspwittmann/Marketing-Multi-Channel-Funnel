@@ -500,11 +500,16 @@ export default function App() {
         {/* KONZEPT SECTION */}
         <section id="konzept" className="scroll-mt-24 pt-8 md:pt-16 space-y-16">
           <div className="max-w-4xl mx-auto space-y-6 text-center">
-            <h1 className="font-syne font-semibold text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tight leading-[1.05] text-gradient animate-fade-in-up">
-              Vollautomatisierte KI-Chatter für Social Media.
+            <h1 className="font-syne font-semibold tracking-tight leading-[1.05] animate-fade-in-up flex flex-col gap-2">
+              <span className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-gradient">
+                Vollautomatisierter KI-Chat
+              </span>
+              <span className="text-2xl sm:text-3xl md:text-4xl text-white/90">
+                für Social Media.
+              </span>
             </h1>
             
-            <p className="font-manrope text-neutral-400 text-base md:text-lg leading-relaxed max-w-2xl mx-auto animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+            <p className="font-manrope text-neutral-400 text-base md:text-lg leading-relaxed max-w-2xl mx-auto animate-fade-in-up mt-6" style={{ animationDelay: '0.2s' }}>
               Verwandle Social Media Follower rund um die Uhr zu zahlenden Abonnenten mit Weiterleitung über Social Media.
             </p>
 
