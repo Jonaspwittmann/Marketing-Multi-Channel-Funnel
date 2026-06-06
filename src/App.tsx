@@ -530,8 +530,34 @@ export default function App() {
             </div>
           </div>
 
-          {/* 3 Handys Side-by-Side */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto pt-6 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+          {/* 3 Handys Side-by-Side mit Flow-Visualisierung */}
+          <div className="relative max-w-6xl mx-auto pt-10 pb-6 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+            
+            {/* Desktop Background Connection Flow (SVG Line) */}
+            <div className="hidden md:block absolute top-1/2 left-[12%] right-[12%] h-full -translate-y-1/2 pointer-events-none z-0">
+               <svg className="w-full h-full absolute top-1/2 -translate-y-1/2 overflow-visible" preserveAspectRatio="none" viewBox="0 0 1000 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M0,50 L1000,50" stroke="url(#flowGrad)" strokeWidth="6" opacity="0.15" filter="blur(6px)" />
+                  <path d="M0,50 L1000,50" stroke="url(#flowGrad)" strokeWidth="2" opacity="0.4" />
+                  <path d="M0,50 L1000,50" stroke="url(#flowGrad)" strokeWidth="2.5" strokeDasharray="10 10" strokeLinecap="round" opacity="0.8" style={{ animation: 'dash 1.5s linear infinite' }} />
+                  <defs>
+                     <linearGradient id="flowGrad" x1="0" y1="0" x2="1000" y2="0" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" stopColor="#ec4899" />
+                        <stop offset="50%" stopColor="#0ea5e9" />
+                        <stop offset="100%" stopColor="#10b981" />
+                     </linearGradient>
+                  </defs>
+               </svg>
+               
+               <div className="absolute top-1/2 left-[33%] -translate-x-1/2 -translate-y-1/2 bg-neutral-950 border border-pink-500/30 rounded-full p-2 flex items-center justify-center shadow-[0_0_20px_rgba(236,72,153,0.4)] text-pink-400 z-10">
+                  <ArrowRight className="h-4 w-4" />
+               </div>
+
+               <div className="absolute top-1/2 left-[66%] -translate-x-1/2 -translate-y-1/2 bg-neutral-950 border border-sky-500/30 rounded-full p-2 flex items-center justify-center shadow-[0_0_20px_rgba(14,165,233,0.4)] text-sky-400 z-10">
+                  <ArrowRight className="h-4 w-4" />
+               </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 relative z-10">
             
             {/* Handy 1: Instagram DM */}
             <div className="glass-panel rounded-[32px] border border-white/10 p-4 relative bg-neutral-950/40 shadow-2xl h-[480px] flex flex-col justify-between overflow-hidden group hover:border-white/20 transition-all duration-300">
@@ -725,6 +751,7 @@ export default function App() {
               </div>
             </div>
 
+            </div>
           </div>
 
           {/* Platform Matrix */}
