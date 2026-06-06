@@ -1552,17 +1552,6 @@ export default function App() {
                 Ja, absolute Kostenkontrolle. Wenn ein TikTok viral geht und 10.000 User gleichzeitig schreiben, kannst du im Dashboard vorher ein striktes "Spend Cap" festlegen. Sobald das Budgetlimit erreicht ist, greift die KI nicht weiter ein und schützt dich vor Überraschungen.
               </p>
             </div>
-
-            {/* FAQ 5 */}
-            <div className="glass-panel border border-white/5 rounded-2xl p-6 space-y-3 hover:scale-[1.02] transition-transform duration-300">
-              <h4 className="text-white font-syne font-semibold text-lg flex items-center gap-2">
-                <Calculator className="h-5 w-5 text-fuchsia-400" />
-                Bietet ihr Revenue-Share an?
-              </h4>
-              <p className="text-neutral-400 font-manrope text-sm leading-relaxed">
-                Aktuell arbeiten wir auf reiner Pay-per-Use-Basis (0,05 € / Text), da die OnlyFans-API kein 100% exaktes Attribution-Tracking zulässt. Unsere Perspektive für die Zukunft ist jedoch ein reines Revenue-Share-Modell, bei dem wir provisionsbasiert arbeiten, sobald das Tracking völlig reibungslos ist.
-              </p>
-            </div>
           </div>
         </section>
 
