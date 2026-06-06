@@ -177,9 +177,11 @@ const QQIcon = (props: React.SVGProps<SVGSVGElement>) => (
 interface BigFunnelTrichterProps {
   selectedChannels: string[];
   setSelectedChannels: React.Dispatch<React.SetStateAction<string[]>>;
+  hubChannel: string;
+  setHubChannel: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const BigFunnelTrichter = ({ selectedChannels, setSelectedChannels }: BigFunnelTrichterProps) => {
+const BigFunnelTrichter = ({ selectedChannels, setSelectedChannels, hubChannel, setHubChannel }: BigFunnelTrichterProps) => {
   const toggleChannel = (id: string) => {
     setSelectedChannels(prev => {
       if (prev.includes(id)) {
@@ -208,7 +210,19 @@ const BigFunnelTrichter = ({ selectedChannels, setSelectedChannels }: BigFunnelT
     { id: 'tt', name: 'TikTok', icon: TikTokIcon, activeColor: 'text-rose-400 border-rose-500/30 bg-rose-500/10 shadow-[0_0_15px_rgba(244,63,94,0.15)] opacity-100 scale-[1.03]', inactiveColor: 'text-neutral-500 border-white/5 bg-white/[0.02] opacity-40 hover:opacity-60', stroke: 'rgba(244,63,94,0.65)', startX: 768, animSpeed: '2.5s' }
   ];
 
-  const isTelegramActive = selectedChannels.includes('tg');
+  const isHubActive = selectedChannels.includes(hubChannel);
+  const activeHub = channels.find(c => c.id === hubChannel) || channels.find(c => c.id === 'tg')!;
+  const HubIcon = activeHub.icon;
+  const getHubStyles = () => {
+    switch(hubChannel) {
+      case 'wa': return { baseBg: 'from-emerald-500/10 via-emerald-500/20 to-emerald-500/10', border: 'border-emerald-500/40', shadow: 'shadow-[0_0_30px_rgba(16,185,129,0.15)]', text: 'text-emerald-400', glow: 'bg-emerald-500 shadow-[0_0_10px_#10b981]', iconBg: 'bg-emerald-500/10 border-emerald-500/35', pulse: 'bg-emerald-500 shadow-[0_0_6px_#10b981]' };
+      case 'tw': return { baseBg: 'from-sky-500/10 via-sky-500/20 to-sky-500/10', border: 'border-sky-500/40', shadow: 'shadow-[0_0_30px_rgba(56,189,248,0.15)]', text: 'text-sky-400', glow: 'bg-sky-500 shadow-[0_0_10px_#38bdf8]', iconBg: 'bg-sky-500/10 border-sky-500/35', pulse: 'bg-sky-500 shadow-[0_0_6px_#38bdf8]' };
+      case 'dc': return { baseBg: 'from-indigo-500/10 via-indigo-500/20 to-indigo-500/10', border: 'border-indigo-500/40', shadow: 'shadow-[0_0_30px_rgba(99,102,241,0.15)]', text: 'text-indigo-400', glow: 'bg-indigo-500 shadow-[0_0_10px_#6366f1]', iconBg: 'bg-indigo-500/10 border-indigo-500/35', pulse: 'bg-indigo-500 shadow-[0_0_6px_#6366f1]' };
+      case 'im': return { baseBg: 'from-blue-500/10 via-blue-500/20 to-blue-500/10', border: 'border-blue-500/40', shadow: 'shadow-[0_0_30px_rgba(59,130,246,0.15)]', text: 'text-blue-500', glow: 'bg-blue-500 shadow-[0_0_10px_#3b82f6]', iconBg: 'bg-blue-500/10 border-blue-500/35', pulse: 'bg-blue-500 shadow-[0_0_6px_#3b82f6]' };
+      default: return { baseBg: 'from-cyan-500/10 via-cyan-500/20 to-cyan-500/10', border: 'border-cyan-500/40', shadow: 'shadow-[0_0_30px_rgba(6,182,212,0.15)]', text: 'text-cyan-400', glow: 'bg-cyan-500 shadow-[0_0_10px_#06b6d4]', iconBg: 'bg-cyan-500/10 border-cyan-500/35', pulse: 'bg-emerald-500 shadow-[0_0_6px_#10b981]' };
+    }
+  };
+  const hubStyles = getHubStyles();
 
   return (
     <div className="w-full max-w-4xl mx-auto my-12 glass-panel rounded-3xl border border-white/5 p-8 relative overflow-hidden bg-neutral-950/40 animate-fade-in">
@@ -247,7 +261,7 @@ const BigFunnelTrichter = ({ selectedChannels, setSelectedChannels }: BigFunnelT
           <svg className="w-full h-full" viewBox="0 0 800 96" fill="none">
             {channels.map((ch) => {
               const isSelected = selectedChannels.includes(ch.id);
-              const isFlowing = isSelected && isTelegramActive;
+              const isFlowing = isSelected && isHubActive;
               const strokeColor = isFlowing ? ch.stroke : 'rgba(255, 255, 255, 0.05)';
               const strokeWidth = isFlowing ? '2.5' : '1';
               const dashArray = isFlowing ? '5 5' : '0';
@@ -269,34 +283,46 @@ const BigFunnelTrichter = ({ selectedChannels, setSelectedChannels }: BigFunnelT
 
         {/* Small connector for mobile instead of svg */}
         <div className={`block sm:hidden h-8 w-0.5 animate-pulse ${
-          selectedChannels.filter(c => c !== 'tg').length > 0 && isTelegramActive
+          selectedChannels.filter(c => c !== hubChannel).length > 0 && isHubActive
             ? 'bg-gradient-to-b from-pink-500 to-cyan-500'
             : 'bg-neutral-800'
         }`} />
 
-        {/* Tier 2: Central Telegram Hub */}
+        {/* Tier 2: Central Hub */}
         <div 
-          onClick={() => toggleChannel('tg')}
+          onClick={() => toggleChannel(hubChannel)}
           className={`relative w-full max-w-lg border rounded-2xl p-5 flex items-center justify-between transition-all duration-300 group cursor-pointer ${
-            isTelegramActive
-              ? 'bg-gradient-to-r from-cyan-500/10 via-cyan-500/20 to-cyan-500/10 border-cyan-500/40 opacity-100 scale-[1.01] shadow-[0_0_30px_rgba(6,182,212,0.15)]'
+            isHubActive
+              ? `bg-gradient-to-r ${hubStyles.baseBg} ${hubStyles.border} opacity-100 scale-[1.01] ${hubStyles.shadow}`
               : 'bg-white/[0.01] border-white/5 opacity-40 hover:opacity-60'
           }`}
         >
-          {isTelegramActive && (
-            <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-cyan-500 rounded-l-2xl shadow-[0_0_10px_#06b6d4]" />
+          {isHubActive && (
+            <div className={`absolute left-0 top-0 bottom-0 w-1.5 rounded-l-2xl ${hubStyles.glow}`} />
           )}
           <div className="flex items-center gap-4 pl-2 text-left">
             <div className={`h-10 w-10 rounded-xl flex items-center justify-center border transition-colors ${
-              isTelegramActive ? 'bg-cyan-500/10 border-cyan-500/35 text-cyan-400' : 'bg-white/5 border-white/5 text-neutral-500'
+              isHubActive ? `${hubStyles.iconBg} ${hubStyles.text}` : 'bg-white/5 border-white/5 text-neutral-500'
             }`}>
-              <TelegramIcon className="h-5 w-5" />
+              <HubIcon className="h-5 w-5" />
             </div>
             <div>
-              <div className={`font-syne font-semibold text-base flex items-center gap-1.5 ${isTelegramActive ? 'text-white' : 'text-neutral-450'}`}>
-                2. Telegram
-                {isTelegramActive && (
-                  <span className="h-2 w-2 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_6px_#10b981]" />
+              <div className={`font-syne font-semibold text-base flex items-center gap-1.5 ${isHubActive ? 'text-white' : 'text-neutral-450'}`}>
+                2. 
+                <select 
+                  value={hubChannel}
+                  onChange={(e) => setHubChannel(e.target.value)}
+                  onClick={(e) => e.stopPropagation()}
+                  className="bg-transparent border-b border-white/20 text-white font-syne outline-none cursor-pointer hover:border-white/50 pb-0.5 ml-1"
+                >
+                  <option value="tg" className="bg-neutral-900 text-sm">Telegram</option>
+                  <option value="wa" className="bg-neutral-900 text-sm">WhatsApp</option>
+                  <option value="dc" className="bg-neutral-900 text-sm">Discord</option>
+                  <option value="tw" className="bg-neutral-900 text-sm">Twitter (X)</option>
+                  <option value="im" className="bg-neutral-900 text-sm">iMessage</option>
+                </select>
+                {isHubActive && (
+                  <span className={`h-2 w-2 rounded-full animate-pulse ml-1 ${hubStyles.pulse}`} />
                 )}
               </div>
               <div className="font-manrope text-xs text-neutral-400">
@@ -305,11 +331,11 @@ const BigFunnelTrichter = ({ selectedChannels, setSelectedChannels }: BigFunnelT
             </div>
           </div>
           <div className="text-right pr-2 flex flex-col items-end">
-            <span className={`font-syne font-bold text-base transition-colors ${isTelegramActive ? 'text-cyan-400' : 'text-neutral-500'}`}>
-              200 € Setup
+            <span className={`font-syne font-bold text-base transition-colors ${isHubActive ? hubStyles.text : 'text-neutral-500'}`}>
+              {hubChannel === 'tg' ? '200 € Setup' : '300 € Setup'}
             </span>
             <div className="font-manrope text-[9px] text-neutral-550 font-semibold">
-              {isTelegramActive ? 'Aktiviert' : 'Inaktiv (Klicken zum Aktivieren)'}
+              {isHubActive ? 'Aktiviert' : 'Inaktiv (Klicken)'}
             </div>
           </div>
         </div>
@@ -319,38 +345,38 @@ const BigFunnelTrichter = ({ selectedChannels, setSelectedChannels }: BigFunnelT
           <svg className="w-full h-full" viewBox="0 0 800 64" fill="none">
             <path 
               d="M 400,0 L 400,64" 
-              stroke={isTelegramActive ? 'rgba(255,255,255,0.4)' : 'rgba(255,255,255,0.05)'} 
+              stroke={isHubActive ? 'rgba(255,255,255,0.4)' : 'rgba(255,255,255,0.05)'} 
               strokeWidth="2" 
-              strokeDasharray={isTelegramActive ? '5 5' : '0'} 
-              className={isTelegramActive ? 'animate-[dash_2s_linear_infinite]' : ''} 
+              strokeDasharray={isHubActive ? '5 5' : '0'} 
+              className={isHubActive ? 'animate-[dash_2s_linear_infinite]' : ''} 
             />
           </svg>
         </div>
 
         {/* Small connector for mobile */}
         <div className={`block sm:hidden h-8 w-0.5 animate-pulse ${
-          isTelegramActive ? 'bg-gradient-to-b from-cyan-500 to-white' : 'bg-neutral-850'
+          isHubActive ? 'bg-gradient-to-b from-white to-transparent opacity-50' : 'bg-neutral-850'
         }`} />
 
         {/* Tier 3: Final Conversion Drop */}
         <div className={`relative w-[90%] max-w-md bg-gradient-to-r border rounded-2xl p-5 flex items-center transition-all duration-300 group ${
-          isTelegramActive
+          isHubActive
             ? 'from-emerald-500/10 via-emerald-500/20 to-emerald-500/10 border-emerald-500/40 opacity-100 scale-[1.01] shadow-[0_0_30px_rgba(16,185,129,0.15)]'
             : 'from-neutral-900/5 via-neutral-900/10 to-neutral-900/5 border-white/5 opacity-30'
         }`}>
-          {isTelegramActive && (
+          {isHubActive && (
             <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-emerald-500 rounded-l-2xl shadow-[0_0_10px_#10b981]" />
           )}
           <div className="flex items-center gap-4 pl-2 text-left w-full">
             <div className={`h-10 w-10 rounded-xl flex items-center justify-center border transition-colors ${
-              isTelegramActive ? 'bg-emerald-500/10 border-emerald-500/35 text-emerald-400' : 'bg-white/5 border-white/5 text-neutral-500'
+              isHubActive ? 'bg-emerald-500/10 border-emerald-500/35 text-emerald-400' : 'bg-white/5 border-white/5 text-neutral-500'
             }`}>
               <Check className="h-5 w-5" />
             </div>
             <div>
-              <div className={`font-syne font-semibold text-base flex items-center gap-1.5 ${isTelegramActive ? 'text-white' : 'text-neutral-450'}`}>
-                3. OnlyFans
-                {isTelegramActive && (
+              <div className={`font-syne font-semibold text-base flex items-center gap-1.5 ${isHubActive ? 'text-white' : 'text-neutral-450'}`}>
+                3. OnlyFans / Patreon
+                {isHubActive && (
                   <span className="h-2 w-2 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_6px_#10b981]" />
                 )}
               </div>
@@ -900,6 +926,8 @@ export default function App() {
           <BigFunnelTrichter 
             selectedChannels={selectedChannels} 
             setSelectedChannels={setSelectedChannels} 
+            hubChannel={bridgePlatform}
+            setHubChannel={setBridgePlatform}
           />
         </section>
 
