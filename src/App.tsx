@@ -1476,7 +1476,7 @@ export default function App() {
                 Können meine Chatter jederzeit übernehmen?
               </h4>
               <p className="text-neutral-400 font-manrope text-sm leading-relaxed">
-                Ja, das System bietet einen nahtlosen Human Handover. Deine Chatter können jederzeit übernehmen – wahrscheinlich direkt mit dem Interface, was Krause macht.
+                Ja, das System bietet einen nahtlosen Human Handover. Deine Chatter können jederzeit und unbemerkt in die Konversation einsteigen – direkt und komfortabel über unser dediziertes, übersichtliches Chat-Interface.
               </p>
             </div>
 
