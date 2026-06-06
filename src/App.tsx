@@ -837,13 +837,14 @@ export default function App() {
                       type="number" 
                       min="1" 
                       max="100000" 
-                      value={monthlyDMs === 0 ? '' : monthlyDMs} 
+                      value={monthlyDMs} 
                       onChange={(e) => {
                         const valStr = e.target.value;
                         if (valStr === '') {
                           setMonthlyDMs('');
                         } else {
-                          setMonthlyDMs(Number(valStr));
+                          const num = parseInt(valStr, 10);
+                          setMonthlyDMs(isNaN(num) ? '' : num);
                         }
                       }}
                       onFocus={(e) => e.target.select()}
