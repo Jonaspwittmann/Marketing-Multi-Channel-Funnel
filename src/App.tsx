@@ -467,7 +467,11 @@ export default function App() {
     else if (voiceCloningModel === 'professional') cloningCost = 500;
 
     let modelCost = 0;
-    if (modelAnpassung === 'advanced') modelCost = 500;
+    let modelMaintenanceCost = 0;
+    if (modelAnpassung === 'advanced') {
+      modelCost = 500;
+      modelMaintenanceCost = 149;
+    }
 
     const initialInvestment = setupCost + cloningCost + modelCost;
 
@@ -489,7 +493,7 @@ export default function App() {
       voiceMinutesTotal = voiceTotalMessages * (10 / 60);  // 10 Sekunden pro Voice = 1/6 Minute
     }
 
-    const monthlyTotal = messageCost + voiceCost;
+    const monthlyTotal = messageCost + voiceCost + modelMaintenanceCost;
 
     // Asiat-Vergleich benchmark: 5 € / Std * 720 Std = 3.600 €
     const asianChatterCost = 3600;
@@ -505,6 +509,7 @@ export default function App() {
       discountPercentage,
       cloningCost,
       modelCost,
+      modelMaintenanceCost,
       initialInvestment,
       totalMessages,
       messageCost,
@@ -960,6 +965,35 @@ export default function App() {
             </p>
           </div>
 
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            <button onClick={() => {
+              setSelectedChannels(['ig']);
+              setModelAnpassung('neutral');
+              setVoiceCloningModel('none');
+            }} className="p-4 border border-white/5 rounded-2xl bg-white/5 hover:bg-white/10 transition text-left space-y-2 cursor-pointer">
+              <div className="text-white font-syne font-bold">Starter Setup</div>
+              <div className="text-neutral-400 text-xs font-manrope">1 Kanal + Neutral AI</div>
+            </button>
+            <button onClick={() => {
+              setSelectedChannels(['ig', 'tg']);
+              setModelAnpassung('advanced');
+              setVoiceCloningModel('simple');
+            }} className="p-4 border border-sky-500/30 rounded-2xl bg-sky-500/5 hover:bg-sky-500/10 transition text-left space-y-2 relative overflow-hidden cursor-pointer">
+              <div className="absolute top-0 right-0 bg-sky-500 text-[8px] font-bold px-2 py-0.5 rounded-bl-lg uppercase tracking-wider">Beliebt</div>
+              <div className="text-white font-syne font-bold">Pro Agency</div>
+              <div className="text-neutral-400 text-xs font-manrope">IG + TG + Advanced AI + Simple Voice</div>
+            </button>
+            <button onClick={() => {
+              setSelectedChannels(['ig', 'tg', 'of', 'wa']);
+              setModelAnpassung('advanced');
+              setVoiceCloningModel('professional');
+            }} className="p-4 border border-purple-500/30 rounded-2xl bg-purple-500/5 hover:bg-purple-500/10 transition text-left space-y-2 relative overflow-hidden cursor-pointer">
+              <div className="absolute top-0 right-0 bg-purple-500 text-[8px] font-bold px-2 py-0.5 rounded-bl-lg uppercase tracking-wider text-white">Elite</div>
+              <div className="text-white font-syne font-bold">Elite Bundle</div>
+              <div className="text-neutral-400 text-xs font-manrope">Multi-Channel + Advanced AI + Pro Voice</div>
+            </button>
+          </div>
+
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             
             {/* Input Controls Panel */}
@@ -1178,9 +1212,10 @@ export default function App() {
                   <button 
                     type="button"
                     onClick={() => setModelAnpassung('advanced')}
-                    className={`p-3 rounded-xl border text-xs font-semibold font-manrope transition-all text-center cursor-pointer ${modelAnpassung === 'advanced' ? 'bg-white text-black border-white' : 'bg-white/5 text-neutral-400 border-white/5 hover:border-white/10'}`}
+                    className={`p-3 rounded-xl border text-xs font-semibold font-manrope transition-all text-center cursor-pointer flex flex-col justify-center items-center gap-1 ${modelAnpassung === 'advanced' ? 'bg-white text-black border-white' : 'bg-white/5 text-neutral-400 border-white/5 hover:border-white/10'}`}
                   >
-                    Advanced Personality (500 €)
+                    <span>Advanced Personality</span>
+                    <span className="text-[9px] opacity-70">500 € + 149 €/Monat</span>
                   </button>
                 </div>
                 <p className="text-[10px] text-neutral-500 font-manrope leading-normal">
@@ -1228,6 +1263,15 @@ export default function App() {
                       </div>
                       <span className="font-semibold text-white shrink-0">{costs.messageCost.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })}</span>
                     </div>
+                    {costs.modelMaintenanceCost > 0 && (
+                      <div className="flex justify-between items-center border-b border-white/5 pb-2.5 gap-4">
+                        <div className="flex flex-col">
+                          <span className="text-sky-300 font-medium">Laufend: AI Maintenance</span>
+                          <span className="text-neutral-500 font-normal text-[10px]">Stetiges Anpassen der Advanced Personality</span>
+                        </div>
+                        <span className="font-semibold text-sky-400 shrink-0">{costs.modelMaintenanceCost.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })}</span>
+                      </div>
+                    )}
                     {costs.modelCost > 0 && (
                       <div className="flex justify-between items-center border-b border-white/5 pb-2.5 gap-4">
                         <div className="flex flex-col">
@@ -1250,7 +1294,7 @@ export default function App() {
                   <div className="text-right">
                     <div className="text-[10px] text-neutral-500 font-manrope font-semibold uppercase tracking-wider">Laufend / Monat</div>
                     <div className="text-lg font-syne font-semibold text-white mt-0.5">
-                      {(costs.messageCost).toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })}
+                      {(costs.messageCost + costs.modelMaintenanceCost).toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })}
                     </div>
                   </div>
                 </div>
@@ -1484,10 +1528,21 @@ export default function App() {
             <div className="glass-panel border border-white/5 rounded-2xl p-6 space-y-3 hover:scale-[1.02] transition-transform duration-300">
               <h4 className="text-white font-syne font-semibold text-lg flex items-center gap-2">
                 <Globe2 className="h-5 w-5 text-cyan-400" />
-                Welche Sprachen werden unterstützt?
+                Gibt es ein Kostenlimit (Spend Cap)?
               </h4>
               <p className="text-neutral-400 font-manrope text-sm leading-relaxed">
-                Unsere Modelle sprechen über 30 Sprachen fließend (inkl. Englisch, Deutsch, Spanisch). Das Voice-Cloning kann deine Stimme sogar fehlerfrei ins Englische übersetzen. Perfekt für internationale Reichweite!
+                Ja, absolute Kostenkontrolle. Wenn ein TikTok viral geht und 10.000 User gleichzeitig schreiben, kannst du im Dashboard vorher ein striktes "Spend Cap" festlegen. Sobald das Budgetlimit erreicht ist, greift die KI nicht weiter ein und schützt dich vor Überraschungen.
+              </p>
+            </div>
+
+            {/* FAQ 5 */}
+            <div className="glass-panel border border-white/5 rounded-2xl p-6 space-y-3 hover:scale-[1.02] transition-transform duration-300">
+              <h4 className="text-white font-syne font-semibold text-lg flex items-center gap-2">
+                <Calculator className="h-5 w-5 text-fuchsia-400" />
+                Bietet ihr Revenue-Share an?
+              </h4>
+              <p className="text-neutral-400 font-manrope text-sm leading-relaxed">
+                Aktuell arbeiten wir auf reiner Pay-per-Use-Basis (0,05 € / Text), da die OnlyFans-API kein 100% exaktes Attribution-Tracking zulässt. Unsere Perspektive für die Zukunft ist jedoch ein reines Revenue-Share-Modell, bei dem wir provisionsbasiert arbeiten, sobald das Tracking völlig reibungslos ist.
               </p>
             </div>
           </div>
