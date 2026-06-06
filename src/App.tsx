@@ -1451,9 +1451,15 @@ export default function App() {
                 <ShieldCheck className="h-5 w-5 text-emerald-400" />
                 Sind meine Accounts sicher vor Bans?
               </h4>
-              <p className="text-neutral-400 font-manrope text-sm leading-relaxed">
-                Abhängig davon, wie das Setup des Kunden aktuell aussieht, stellen wir die passende Infrastruktur zur Verfügung. Eine 100%ige Bann-Garantie können wir jedoch nicht versprechen. Wir garantieren lediglich ein Setup, bei dem die Bann-Wahrscheinlichkeit extrem gering ist, da wir die modernsten Bridges und Reverse-Engineering-Technologien nutzen – mehr aber nicht.
-              </p>
+              <div className="text-neutral-400 font-manrope text-sm leading-relaxed space-y-2">
+                <p>Wir bieten dir das beste und sicherste Setup, das es aktuell am Markt gibt. Um die Bann-Wahrscheinlichkeit extrem gering zu halten, setzen wir auf folgende Punkte:</p>
+                <ul className="list-disc pl-5 space-y-1">
+                  <li>Modernste Bridges</li>
+                  <li>Reverse Engineering Technology</li>
+                  <li>Menschlich agierende Interfaces</li>
+                  <li>Infrastruktur individuell abgestimmt auf die Gegebenheiten des Kunden</li>
+                </ul>
+              </div>
             </div>
             
             {/* FAQ 2 */}
@@ -1462,9 +1468,13 @@ export default function App() {
                 <BrainCircuit className="h-5 w-5 text-purple-400" />
                 Flirtet die KI wirklich wie ich?
               </h4>
-              <p className="text-neutral-400 font-manrope text-sm leading-relaxed">
-                Ja. Wir trainieren das KI-Modell individuell auf Basis deiner bisherigen Chat-Historie. Dein Slang, deine bevorzugten Emojis und dein "Vibe" werden komplett kopiert. Fans merken nicht, dass sie mit einer KI schreiben.
-              </p>
+              <div className="text-neutral-400 font-manrope text-sm leading-relaxed space-y-2">
+                <p>Hier gibt es zwei Differenzierungen:</p>
+                <ul className="list-disc pl-5 space-y-1">
+                  <li><strong>Standard:</strong> Der Agent weiß nicht zwingend, wer die Person genau ist. Er schreibt neutral (passend zu jedem Model) und schickt einfach fokussiert den Link.</li>
+                  <li><strong>Individualisiert (500 € Aufpreis):</strong> Die KI bekommt eine echte Personality. Dein Slang, dein "Vibe" und deine Präferenzen werden komplett auf dich abgestimmt.</li>
+                </ul>
+              </div>
             </div>
 
             {/* FAQ 3 */}
@@ -1474,7 +1484,7 @@ export default function App() {
                 Können meine Chatter jederzeit übernehmen?
               </h4>
               <p className="text-neutral-400 font-manrope text-sm leading-relaxed">
-                Ja! Das System verfügt über einen nahtlosen "Human Handoff". Sobald jemand z.B. nach Custom-Content fragt, kann ein Mensch den Chat im Dashboard sofort und unbemerkt übernehmen.
+                Ja, das System bietet einen nahtlosen Human Handover. Deine Chatter können jederzeit übernehmen – wahrscheinlich direkt mit dem Interface, was Krause macht.
               </p>
             </div>
 
