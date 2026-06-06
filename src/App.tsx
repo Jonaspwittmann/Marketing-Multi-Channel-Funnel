@@ -140,10 +140,8 @@ const IMessageIcon = (props: React.SVGProps<SVGSVGElement>) => (
 );
 
 const DiscordIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
-    <circle cx="9" cy="12" r="1" />
-    <circle cx="15" cy="12" r="1" />
-    <path d="M7 20c-2 0-3-2-3-2s1-6 8-6 8 6 8 6-1 2-3 2-2-2-2-2H9s-1 2-2 2" />
+  <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
+    <path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z" />
   </svg>
 );
 
@@ -401,12 +399,12 @@ export default function App() {
 
     const initialInvestment = setupCost + cloningCost;
 
-    // monatliche Kosten = total DMs * 0,05 € pro DM
-    const totalMessages = typeof monthlyDMs === 'number' ? monthlyDMs : 0;
+    // Monatliche Kunden/Leads
+    const monthlyLeads = typeof monthlyDMs === 'number' ? monthlyDMs : 0;
+    
+    // Gesamtnachrichten = Kunden * Nachrichten pro Kunde
+    const totalMessages = monthlyLeads * messagesPerCustomer;
     const messageCost = totalMessages * 0.05;
-
-    // Anzahl der Kunden = monatliche DMs / DMs pro Kunde
-    const monthlyLeads = Math.ceil(totalMessages / messagesPerCustomer);
     
     // Voice-Messages pro Kunde (über Slider gesteuert)
 
@@ -531,7 +529,14 @@ export default function App() {
           </div>
 
           {/* 3 Handys Side-by-Side mit Flow-Visualisierung */}
-          <div className="relative max-w-6xl mx-auto pt-10 pb-6 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+          <div className="relative max-w-6xl mx-auto pt-4 pb-6 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+            
+            <div className="flex justify-center mb-10 relative z-20">
+              <div className="bg-neutral-900/80 backdrop-blur-md border border-white/10 rounded-full px-5 py-2 flex items-center gap-2 text-xs md:text-sm font-manrope text-neutral-400 shadow-[0_0_15px_rgba(255,255,255,0.05)]">
+                <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span><span className="text-white font-semibold">Dynamische Workflows:</span> Verbinde jeden Messenger beliebig (z.B. Instagram ↔ WhatsApp).</span>
+              </div>
+            </div>
             
             {/* Desktop Background Connection Flow (SVG Line) */}
             <div className="hidden md:block absolute top-1/2 left-[12%] right-[12%] h-full -translate-y-1/2 pointer-events-none z-0">
@@ -764,21 +769,21 @@ export default function App() {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {[
-                { id: 'wa', name: 'WhatsApp', icon: WhatsAppIcon, activeColor: 'border-emerald-500/40 bg-emerald-500/10 text-emerald-400 shadow-[0_0_20px_rgba(16,185,129,0.15)]', inactiveColor: 'border-white/5 bg-white/[0.02] text-neutral-500 opacity-60 hover:opacity-80 hover:border-white/10', desc: 'Persönlicher Chat-Support und Direct-Marketing auf dem beliebtesten Messenger.' },
-                { id: 'fb', name: 'Facebook', icon: FacebookIcon, activeColor: 'border-blue-500/40 bg-blue-500/10 text-blue-400 shadow-[0_0_20px_rgba(59,130,246,0.15)]', inactiveColor: 'border-white/5 bg-white/[0.02] text-neutral-500 opacity-60 hover:opacity-80 hover:border-white/10', desc: 'Kundenbetreuung und Lead-Qualifizierung über den Messenger.' },
-                { id: 'ig', name: 'Instagram', icon: InstagramIcon, activeColor: 'border-pink-500/40 bg-pink-500/10 text-pink-400 shadow-[0_0_20px_rgba(236,72,153,0.15)]', inactiveColor: 'border-white/5 bg-white/[0.02] text-neutral-500 opacity-60 hover:opacity-80 hover:border-white/10', desc: 'Vollautomatisierte DM-Antworten zur Lead-Qualifizierung und Conversion.' },
-                { id: 'tg', name: 'Telegram', icon: TelegramIcon, activeColor: 'border-cyan-500/40 bg-cyan-500/10 text-cyan-400 shadow-[0_0_20px_rgba(6,182,212,0.15)]', inactiveColor: 'border-white/5 bg-white/[0.02] text-neutral-500 opacity-60 hover:opacity-80 hover:border-white/10', desc: 'Zentraler Hub zur Kundenbindung, Beziehungsaufbau und OnlyFans Conversion.' },
-                { id: 'im', name: 'iMessage', icon: IMessageIcon, activeColor: 'border-blue-500/40 bg-blue-500/10 text-blue-500 shadow-[0_0_20px_rgba(59,130,246,0.15)]', inactiveColor: 'border-white/5 bg-white/[0.02] text-neutral-500 opacity-60 hover:opacity-80 hover:border-white/10', desc: 'Apple-native Integration für premium Leads und Conversion.' },
-                { id: 'si', name: 'Signal', icon: SignalIcon, activeColor: 'border-blue-400/40 bg-blue-400/10 text-blue-300 shadow-[0_0_20px_rgba(96,165,250,0.15)]', inactiveColor: 'border-white/5 bg-white/[0.02] text-neutral-500 opacity-60 hover:opacity-80 hover:border-white/10', desc: 'Datenschutz-fokussierte Kommunikation für High-Ticket Kunden.' },
-                { id: 'tw', name: 'Twitter (X)', icon: TwitterIcon, activeColor: 'border-sky-500/40 bg-sky-500/10 text-sky-400 shadow-[0_0_20px_rgba(56,189,248,0.15)]', inactiveColor: 'border-white/5 bg-white/[0.02] text-neutral-500 opacity-60 hover:opacity-80 hover:border-white/10', desc: 'Direkte Kundenansprache und vollautomatisierte Funnels via DMs.' },
-                { id: 'sl', name: 'Slack', icon: SlackIcon, activeColor: 'border-fuchsia-500/40 bg-fuchsia-500/10 text-fuchsia-400 shadow-[0_0_20px_rgba(232,121,249,0.15)]', inactiveColor: 'border-white/5 bg-white/[0.02] text-neutral-500 opacity-60 hover:opacity-80 hover:border-white/10', desc: 'B2B Funnels und direkter Kontakt in professionellen Communities.' },
+                { id: 'wa', name: 'WhatsApp', icon: WhatsAppIcon, activeColor: 'border-emerald-500/40 bg-emerald-500/10 text-emerald-400 shadow-[0_0_20px_rgba(16,185,129,0.15)]', inactiveColor: 'border-white/5 bg-white/[0.02] text-neutral-500 opacity-60 hover:opacity-80 hover:border-white/10', desc: 'Vollautomatisierte DM-Antworten, Lead-Qualifizierung und Conversions.' },
+                { id: 'fb', name: 'Facebook', icon: FacebookIcon, activeColor: 'border-blue-500/40 bg-blue-500/10 text-blue-400 shadow-[0_0_20px_rgba(59,130,246,0.15)]', inactiveColor: 'border-white/5 bg-white/[0.02] text-neutral-500 opacity-60 hover:opacity-80 hover:border-white/10', desc: 'Vollautomatisierte DM-Antworten, Lead-Qualifizierung und Conversions.' },
+                { id: 'ig', name: 'Instagram', icon: InstagramIcon, activeColor: 'border-pink-500/40 bg-pink-500/10 text-pink-400 shadow-[0_0_20px_rgba(236,72,153,0.15)]', inactiveColor: 'border-white/5 bg-white/[0.02] text-neutral-500 opacity-60 hover:opacity-80 hover:border-white/10', desc: 'Vollautomatisierte DM-Antworten, Lead-Qualifizierung und Conversions.' },
+                { id: 'tg', name: 'Telegram', icon: TelegramIcon, activeColor: 'border-cyan-500/40 bg-cyan-500/10 text-cyan-400 shadow-[0_0_20px_rgba(6,182,212,0.15)]', inactiveColor: 'border-white/5 bg-white/[0.02] text-neutral-500 opacity-60 hover:opacity-80 hover:border-white/10', desc: 'Vollautomatisierte DM-Antworten, Lead-Qualifizierung und Conversions.' },
+                { id: 'im', name: 'iMessage', icon: IMessageIcon, activeColor: 'border-blue-500/40 bg-blue-500/10 text-blue-500 shadow-[0_0_20px_rgba(59,130,246,0.15)]', inactiveColor: 'border-white/5 bg-white/[0.02] text-neutral-500 opacity-60 hover:opacity-80 hover:border-white/10', desc: 'Vollautomatisierte DM-Antworten, Lead-Qualifizierung und Conversions.' },
+                { id: 'si', name: 'Signal', icon: SignalIcon, activeColor: 'border-blue-400/40 bg-blue-400/10 text-blue-300 shadow-[0_0_20px_rgba(96,165,250,0.15)]', inactiveColor: 'border-white/5 bg-white/[0.02] text-neutral-500 opacity-60 hover:opacity-80 hover:border-white/10', desc: 'Vollautomatisierte DM-Antworten, Lead-Qualifizierung und Conversions.' },
+                { id: 'tw', name: 'Twitter (X)', icon: TwitterIcon, activeColor: 'border-sky-500/40 bg-sky-500/10 text-sky-400 shadow-[0_0_20px_rgba(56,189,248,0.15)]', inactiveColor: 'border-white/5 bg-white/[0.02] text-neutral-500 opacity-60 hover:opacity-80 hover:border-white/10', desc: 'Vollautomatisierte DM-Antworten, Lead-Qualifizierung und Conversions.' },
+                { id: 'sl', name: 'Slack', icon: SlackIcon, activeColor: 'border-fuchsia-500/40 bg-fuchsia-500/10 text-fuchsia-400 shadow-[0_0_20px_rgba(232,121,249,0.15)]', inactiveColor: 'border-white/5 bg-white/[0.02] text-neutral-500 opacity-60 hover:opacity-80 hover:border-white/10', desc: 'Vollautomatisierte DM-Antworten, Lead-Qualifizierung und Conversions.' },
                 { id: 'gc', name: 'Google Chat', icon: GoogleChatIcon, activeColor: 'border-green-500/40 bg-green-500/10 text-green-500 shadow-[0_0_20px_rgba(34,197,94,0.15)]', inactiveColor: 'border-white/5 bg-white/[0.02] text-neutral-500 opacity-60 hover:opacity-80 hover:border-white/10', desc: 'Nahtlose Integration in den Google Workspace von Firmenkunden.' },
-                { id: 'li', name: 'LinkedIn', icon: LinkedInIcon, activeColor: 'border-sky-500/40 bg-sky-500/10 text-sky-500 shadow-[0_0_20px_rgba(14,165,233,0.15)]', inactiveColor: 'border-white/5 bg-white/[0.02] text-neutral-500 opacity-60 hover:opacity-80 hover:border-white/10', desc: 'Vollautomatisierte B2B-Antworten zur Lead-Qualifizierung.' },
-                { id: 'dc', name: 'Discord', icon: DiscordIcon, activeColor: 'border-indigo-500/40 bg-indigo-500/10 text-indigo-400 shadow-[0_0_20px_rgba(99,102,241,0.15)]', inactiveColor: 'border-white/5 bg-white/[0.02] text-neutral-500 opacity-60 hover:opacity-80 hover:border-white/10', desc: 'Community-Building und direkte Ansprache über Discord-DMs.' },
-                { id: 'wc', name: 'WeChat', icon: WeChatIcon, activeColor: 'border-green-500/40 bg-green-500/10 text-green-400 shadow-[0_0_20px_rgba(74,222,128,0.15)]', inactiveColor: 'border-white/5 bg-white/[0.02] text-neutral-500 opacity-60 hover:opacity-80 hover:border-white/10', desc: 'Erschließung des asiatischen Marktes über die Super-App.' },
-                { id: 'ln', name: 'Line', icon: LineIcon, activeColor: 'border-emerald-500/40 bg-emerald-500/10 text-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.15)]', inactiveColor: 'border-white/5 bg-white/[0.02] text-neutral-500 opacity-60 hover:opacity-80 hover:border-white/10', desc: 'Massenmarkt-Reach in Japan und Südostasien.' },
-                { id: 'qq', name: 'Tencent QQ', icon: QQIcon, activeColor: 'border-orange-500/40 bg-orange-500/10 text-orange-400 shadow-[0_0_20px_rgba(251,146,60,0.15)]', inactiveColor: 'border-white/5 bg-white/[0.02] text-neutral-500 opacity-60 hover:opacity-80 hover:border-white/10', desc: 'Automatisierung für eine der größten Plattformen in Asien.' },
-                { id: 'tt', name: 'TikTok', icon: TikTokIcon, activeColor: 'border-rose-500/40 bg-rose-500/10 text-rose-450 shadow-[0_0_20px_rgba(244,63,94,0.15)]', inactiveColor: 'border-white/5 bg-white/[0.02] text-neutral-500 opacity-60 hover:opacity-80 hover:border-white/10', desc: 'Automatisierte DMs für massive Reichweite und junge Zielgruppen.' }
+                { id: 'li', name: 'LinkedIn', icon: LinkedInIcon, activeColor: 'border-sky-500/40 bg-sky-500/10 text-sky-500 shadow-[0_0_20px_rgba(14,165,233,0.15)]', inactiveColor: 'border-white/5 bg-white/[0.02] text-neutral-500 opacity-60 hover:opacity-80 hover:border-white/10', desc: 'Vollautomatisierte DM-Antworten, Lead-Qualifizierung und Conversions.' },
+                { id: 'dc', name: 'Discord', icon: DiscordIcon, activeColor: 'border-indigo-500/40 bg-indigo-500/10 text-indigo-400 shadow-[0_0_20px_rgba(99,102,241,0.15)]', inactiveColor: 'border-white/5 bg-white/[0.02] text-neutral-500 opacity-60 hover:opacity-80 hover:border-white/10', desc: 'Vollautomatisierte DM-Antworten, Lead-Qualifizierung und Conversions.' },
+                { id: 'wc', name: 'WeChat', icon: WeChatIcon, activeColor: 'border-green-500/40 bg-green-500/10 text-green-400 shadow-[0_0_20px_rgba(74,222,128,0.15)]', inactiveColor: 'border-white/5 bg-white/[0.02] text-neutral-500 opacity-60 hover:opacity-80 hover:border-white/10', desc: 'Vollautomatisierte DM-Antworten, Lead-Qualifizierung und Conversions.' },
+                { id: 'ln', name: 'Line', icon: LineIcon, activeColor: 'border-emerald-500/40 bg-emerald-500/10 text-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.15)]', inactiveColor: 'border-white/5 bg-white/[0.02] text-neutral-500 opacity-60 hover:opacity-80 hover:border-white/10', desc: 'Vollautomatisierte DM-Antworten, Lead-Qualifizierung und Conversions.' },
+                { id: 'qq', name: 'Tencent QQ', icon: QQIcon, activeColor: 'border-orange-500/40 bg-orange-500/10 text-orange-400 shadow-[0_0_20px_rgba(251,146,60,0.15)]', inactiveColor: 'border-white/5 bg-white/[0.02] text-neutral-500 opacity-60 hover:opacity-80 hover:border-white/10', desc: 'Vollautomatisierte DM-Antworten, Lead-Qualifizierung und Conversions.' },
+                { id: 'tt', name: 'TikTok', icon: TikTokIcon, activeColor: 'border-rose-500/40 bg-rose-500/10 text-rose-450 shadow-[0_0_20px_rgba(244,63,94,0.15)]', inactiveColor: 'border-white/5 bg-white/[0.02] text-neutral-500 opacity-60 hover:opacity-80 hover:border-white/10', desc: 'Vollautomatisierte DM-Antworten, Lead-Qualifizierung und Conversions.' }
               ].map((platform, idx) => {
                 const IconComponent = platform.icon;
                 const isSelected = selectedChannels.includes(platform.id);
@@ -864,10 +869,10 @@ export default function App() {
                 <Calculator className="h-5 w-5 text-white" /> DM-Bot-Kosten
               </h3>
 
-              {/* Slider & Manual Input: Monatliche DMs */}
+              {/* Slider & Manual Input: Monatliche Kunden/Leads */}
               <div className="space-y-3">
                 <div className="flex justify-between items-center">
-                  <label className="font-manrope text-sm font-medium text-neutral-300">Monatliche DMs</label>
+                  <label className="font-manrope text-sm font-medium text-neutral-300">Monatliche Kunden/Leads</label>
                   <div className="flex items-center gap-2">
                     <input 
                       type="number" 
@@ -891,7 +896,7 @@ export default function App() {
                       }}
                       className="w-28 bg-white/5 border border-white/10 rounded px-2.5 py-1 text-right text-white font-syne font-semibold text-sm focus:outline-none focus:border-white/30"
                     />
-                    <span className="text-xs text-neutral-500 font-semibold uppercase">DMs</span>
+                    <span className="text-xs text-neutral-500 font-semibold uppercase">Leads</span>
                   </div>
                 </div>
                 <input 
@@ -904,14 +909,14 @@ export default function App() {
                   className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-white" 
                 />
                 <p className="text-[10px] font-manrope text-neutral-500">
-                  Die geschätzte Anzahl der monatlich gesendeten/empfangenen Direktnachrichten über alle Netzwerke (wählbar ab 1).
+                  Die Anzahl der individuellen Personen/Leads, die monatlich von deinem System betreut werden.
                 </p>
               </div>
 
               {/* Slider: DMs pro Kunde */}
               <div className="space-y-3">
                 <div className="flex justify-between items-baseline">
-                  <label className="font-manrope text-sm font-medium text-neutral-300">DMs pro Kunde</label>
+                  <label className="font-manrope text-sm font-medium text-neutral-300">Nachrichten pro Kunde</label>
                   <span className="font-syne font-semibold text-lg text-white">{messagesPerCustomer}</span>
                 </div>
                 <input 
