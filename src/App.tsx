@@ -369,11 +369,10 @@ export default function App() {
   const [activeSection, setActiveSection] = useState('konzept');
 
   // ROI / Calculator States
-  const [dailyDMs, setDailyDMs] = useState(300);
+  const [monthlyDMs, setMonthlyDMs] = useState<number | string>(300);
   const [selectedChannels, setSelectedChannels] = useState<string[]>(['tg', 'ig']);
   const [voiceCloningModel, setVoiceCloningModel] = useState<'none' | 'simple' | 'professional'>('none');
-  const [messagesPerLead, setMessagesPerLead] = useState(5);
-  const [voiceMessagesPerLead, setVoiceMessagesPerLead] = useState(1);
+  const [messagesPerCustomer, setMessagesPerCustomer] = useState(5);
 
   // Calculations for Pricing & ROI Calculator
   const getCalculatedCosts = () => {
@@ -388,13 +387,8 @@ export default function App() {
       }
     });
 
-    let discountPercentage = 0;
-    if (channelsCount === 2) discountPercentage = 0.10;
-    else if (channelsCount === 3) discountPercentage = 0.15;
-    else if (channelsCount === 4) discountPercentage = 0.20;
-    else if (channelsCount >= 5) discountPercentage = 0.25;
-
-    const setupCost = rawSetupCost * (1 - discountPercentage);
+    const discountPercentage = 0;
+    const setupCost = rawSetupCost;
 
     let cloningCost = 0;
     if (voiceCloningModel === 'simple') cloningCost = 100;
@@ -402,10 +396,15 @@ export default function App() {
 
     const initialInvestment = setupCost + cloningCost;
 
-    // monatliche Kosten = Fans * Nachrichten pro Kunde * 0,05 € pro Nachricht
-    const monthlyLeads = dailyDMs;
-    const totalMessages = monthlyLeads * messagesPerLead;
+    // monatliche Kosten = total DMs * 0,05 € pro DM
+    const totalMessages = typeof monthlyDMs === 'number' ? monthlyDMs : 0;
     const messageCost = totalMessages * 0.05;
+
+    // Anzahl der Kunden = monatliche DMs / DMs pro Kunde
+    const monthlyLeads = Math.ceil(totalMessages / messagesPerCustomer);
+    
+    // Voice-Messages pro Kunde ist fest auf 1 pro User
+    const voiceMessagesPerLead = 1;
 
     let voiceCost = 0;
     let voiceTotalMessages = 0;
@@ -826,59 +825,68 @@ export default function App() {
             {/* Input Controls Panel */}
             <div className="lg:col-span-7 glass-panel rounded-3xl border border-white/5 p-6 md:p-8 space-y-8 text-left">
               <h3 className="font-syne font-semibold text-lg md:text-xl text-white flex items-center gap-2">
-                <Calculator className="h-5 w-5 text-white" /> Einstellungen simulieren
+                <Calculator className="h-5 w-5 text-white" /> DM-Bot-Kosten
               </h3>
 
-              {/* Slider & Manual Input: Monatliche DM-Kunden */}
+              {/* Slider & Manual Input: Monatliche DMs */}
               <div className="space-y-3">
                 <div className="flex justify-between items-center">
-                  <label className="font-manrope text-sm font-medium text-neutral-300">Monatliche DM-Kunden (Fans)</label>
+                  <label className="font-manrope text-sm font-medium text-neutral-300">Monatliche DMs</label>
                   <div className="flex items-center gap-2">
                     <input 
                       type="number" 
                       min="1" 
-                      max="5000" 
-                      value={dailyDMs} 
+                      max="100000" 
+                      value={monthlyDMs === 0 ? '' : monthlyDMs} 
                       onChange={(e) => {
-                        const val = Math.max(1, Math.min(5000, Number(e.target.value) || 1));
-                        setDailyDMs(val);
+                        const valStr = e.target.value;
+                        if (valStr === '') {
+                          setMonthlyDMs('');
+                        } else {
+                          setMonthlyDMs(Number(valStr));
+                        }
+                      }}
+                      onBlur={() => {
+                        if (monthlyDMs === '' || Number(monthlyDMs) <= 0) {
+                          setMonthlyDMs(1);
+                        }
                       }}
                       className="w-28 bg-white/5 border border-white/10 rounded px-2.5 py-1 text-right text-white font-syne font-semibold text-sm focus:outline-none focus:border-white/30"
                     />
-                    <span className="text-xs text-neutral-500 font-semibold uppercase">Fans</span>
+                    <span className="text-xs text-neutral-500 font-semibold uppercase">DMs</span>
                   </div>
                 </div>
                 <input 
                   type="range" 
                   min="1" 
-                  max="5000" 
-                  step="1"
-                  value={dailyDMs} 
-                  onChange={(e) => setDailyDMs(Number(e.target.value))}
+                  max="100000" 
+                  step="10"
+                  value={typeof monthlyDMs === 'number' ? monthlyDMs : 1} 
+                  onChange={(e) => setMonthlyDMs(Number(e.target.value))}
                   className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-white" 
                 />
                 <p className="text-[10px] font-manrope text-neutral-500">
-                  Die geschätzte Anzahl der monatlichen DM-Kunden (Fans), die über alle Netzwerke eine Konversation starten (wählbar von 1 bis 5.000).
+                  Die geschätzte Anzahl der monatlich gesendeten/empfangenen Direktnachrichten über alle Netzwerke (wählbar ab 1).
                 </p>
               </div>
 
-              {/* Slider: Messages per lead */}
+              {/* Slider: DMs pro Kunde */}
               <div className="space-y-3">
                 <div className="flex justify-between items-baseline">
-                  <label className="font-manrope text-sm font-medium text-neutral-300">Durchschnittliche Nachrichten pro DM-Kunde</label>
-                  <span className="font-syne font-semibold text-lg text-white">{messagesPerLead}</span>
+                  <label className="font-manrope text-sm font-medium text-neutral-300">DMs pro Kunde</label>
+                  <span className="font-syne font-semibold text-lg text-white">{messagesPerCustomer}</span>
                 </div>
                 <input 
                   type="range" 
                   min="1" 
-                  max="30" 
+                  max="50" 
                   step="1"
-                  value={messagesPerLead} 
-                  onChange={(e) => setMessagesPerLead(Number(e.target.value))}
+                  value={messagesPerCustomer} 
+                  onChange={(e) => setMessagesPerCustomer(Number(e.target.value))}
                   className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-white" 
                 />
                 <p className="text-[10px] font-manrope text-neutral-500">
-                  Die durchschnittliche Anzahl der ausgetauschten Textnachrichten pro qualifiziertem Kunden (wählbar von 1 bis 30).
+                  Die durchschnittliche Anzahl der ausgetauschten Nachrichten pro Kunde (wählbar ab 1).
                 </p>
               </div>
 
@@ -930,8 +938,6 @@ export default function App() {
                 </div>
                 <p className="text-[10px] text-neutral-500 font-manrope leading-normal">
                   * Setup-Kosten: Telegram-Kanal <strong>200 €</strong>, jeder andere Kanal <strong>300 €</strong> Setup.
-                  <br />
-                  * **Mengenrabatt (Bundle-Rabatt)** auf Setup-Gebühren: 2 Kanäle = 10% | 3 Kanäle = 15% | 4 Kanäle = 20% | 5+ Kanäle = 25%.
                 </p>
               </div>
 
@@ -969,26 +975,17 @@ export default function App() {
               {/* Info: voiceMessagesPerUser (Only show if voiceCloningModel !== 'none') */}
               {voiceCloningModel !== 'none' && (
                 <div className="space-y-4 p-4 rounded-xl bg-purple-500/5 border border-purple-500/10 animate-fade-in text-left">
-                  <div className="space-y-3">
+                  <div className="space-y-1">
                     <div className="flex justify-between items-baseline">
-                      <label className="font-manrope text-sm font-medium text-purple-300">Voice-Nachrichten pro DM-Kunde</label>
-                      <span className="font-syne font-semibold text-lg text-purple-300">{voiceMessagesPerLead}</span>
+                      <label className="font-manrope text-sm font-medium text-purple-300">Voice-Nachrichten pro Kunde</label>
+                      <span className="font-syne font-semibold text-base text-purple-300">1 (eine pro User)</span>
                     </div>
-                    <input 
-                      type="range" 
-                      min="1" 
-                      max="10" 
-                      step="1"
-                      value={voiceMessagesPerLead} 
-                      onChange={(e) => setVoiceMessagesPerLead(Number(e.target.value))}
-                      className="w-full h-1 bg-purple-500/20 rounded-lg appearance-none cursor-pointer accent-purple-400" 
-                    />
                     <p className="text-[10px] font-manrope text-neutral-500">
-                      Die durchschnittliche Anzahl an generierten Voice-Nachrichten pro DM-Kunde (wählbar von 1 bis 10).
+                      Es wird standardmäßig genau eine personalisierte Sprachnachricht via Voice-Cloning an jeden User gesendet.
                     </p>
                   </div>
 
-                  <div className="text-[11px] font-manrope text-neutral-400 space-y-1 pt-3 border-t border-purple-500/20">
+                  <div className="text-[11px] font-manrope text-neutral-400 space-y-1.5 pt-3 border-t border-purple-500/20">
                     <div className="flex justify-between">
                       <span>Empfänger (Monatlich):</span>
                       <span className="text-white font-semibold">{costs.monthlyLeads.toLocaleString('de-DE')} User</span>
@@ -1006,7 +1003,7 @@ export default function App() {
                       <span className="text-purple-300 font-semibold">{costs.voiceMinutes.toLocaleString('de-DE', { maximumFractionDigits: 1 })} Min. / Monat</span>
                     </div>
                     <div className="flex justify-between text-xs pt-1.5 text-white font-semibold border-t border-white/5 mt-1.5">
-                      <span>Laufende Voice-Kosten · 0,20 € / 10 Sek.:</span>
+                      <span>Laufende Voice-Kosten · 0,20 € / Msg:</span>
                       <span className="text-emerald-400">{costs.voiceCost.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })}</span>
                     </div>
                   </div>
@@ -1046,12 +1043,12 @@ export default function App() {
                         <span className="font-semibold text-white">{costs.setupCost.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })}</span>
                       </div>
                     )}
-                    <div className="flex justify-between border-b border-white/5 pb-2.5">
-                      <span className="text-neutral-400 font-medium flex justify-between w-full">
-                        <span>Laufend: Bot-Textnachrichten · 0,05 € / Msg</span>
-                        <span className="text-neutral-500 font-normal">× {costs.totalMessages.toLocaleString('de-DE')}</span>
-                      </span>
-                      <span className="font-semibold text-white">{costs.messageCost.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })}</span>
+                    <div className="flex justify-between items-center border-b border-white/5 pb-2.5 gap-4">
+                      <div className="flex flex-col">
+                        <span className="text-neutral-400 font-medium">Laufend: Bot-Textnachrichten</span>
+                        <span className="text-neutral-500 font-normal text-[10px]">0,05 € / Msg × {costs.totalMessages.toLocaleString('de-DE')}</span>
+                      </div>
+                      <span className="font-semibold text-white shrink-0">{costs.messageCost.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })}</span>
                     </div>
                   </div>
                 </div>
@@ -1085,12 +1082,12 @@ export default function App() {
                         <span className="text-neutral-400">Einrichtung: Voice-Modell Setup (Extra)</span>
                         <span className="font-semibold text-white">{costs.cloningCost.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })}</span>
                       </div>
-                      <div className="flex justify-between border-b border-white/5 pb-2.5">
-                        <span className="text-neutral-400 flex justify-between w-full">
-                          <span>Laufend: Voice-Generierung · 0,20 € / 10 Sek.</span>
-                          <span className="text-neutral-500 font-normal">× {costs.voiceTotalMessages.toLocaleString('de-DE')}</span>
-                        </span>
-                        <span className="font-semibold text-white">{costs.voiceCost.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })}</span>
+                      <div className="flex justify-between items-center border-b border-white/5 pb-2.5 gap-4">
+                        <div className="flex flex-col">
+                          <span className="text-neutral-400 font-medium">Laufend: Voice-Generierung</span>
+                          <span className="text-neutral-500 font-normal text-[10px]">0,20 € / 10 Sek. × {costs.voiceTotalMessages.toLocaleString('de-DE')}</span>
+                        </div>
+                        <span className="font-semibold text-white shrink-0">{costs.voiceCost.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })}</span>
                       </div>
                     </div>
                   </div>
