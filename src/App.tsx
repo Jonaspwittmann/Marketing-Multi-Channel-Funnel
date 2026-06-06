@@ -1504,6 +1504,11 @@ export default function App() {
         </div>
         <p>© {new Date().getFullYear()}. Alle Rechte vorbehalten.</p>
         <p className="text-[10px] text-neutral-600">Keine Cookie-Tracker. 100% Performance-fokussiert.</p>
+        <div className="flex justify-center gap-4 text-[10px] text-neutral-600 mt-2">
+          <a href="https://www.wko.at/oe/information-consulting/unternehmensberatung-buchhaltung-it/agb-it-programmierdienstleistungen-b2b.pdf" target="_blank" rel="noopener noreferrer" className="hover:text-neutral-400 transition-colors underline underline-offset-2">
+            AGB IT-Programmierdienstleistungen (B2B)
+          </a>
+        </div>
       </footer>
       
     </div>
