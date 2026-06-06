@@ -493,23 +493,18 @@ export default function App() {
     }
   };
   const getSourceUI = () => {
-    if (sourcePlatform === 'tw') return { name: 'Twitter Direct Message', agent: 'KI-Agent (TW-Trigger)', icon: TwitterIcon, iconColor: 'text-sky-400', color: 'text-sky-400', bubble: 'bg-gradient-to-r from-sky-600/90 to-blue-600/90', bg: 'from-sky-500 via-blue-500 to-indigo-500' };
-    if (sourcePlatform === 'wa') return { name: 'WhatsApp Chat', agent: 'KI-Agent (WA-Trigger)', icon: WhatsAppIcon, iconColor: 'text-emerald-400', color: 'text-emerald-400', bubble: 'bg-gradient-to-r from-emerald-600/90 to-green-600/90', bg: 'from-emerald-500 via-green-500 to-teal-500' };
     return { name: 'Instagram Direct Message', agent: 'KI-Agent (IG-Trigger)', icon: InstagramIcon, iconColor: 'text-pink-400', color: 'text-pink-400', bubble: 'bg-gradient-to-r from-pink-600/90 to-purple-600/90', bg: 'from-yellow-500 via-red-500 to-purple-500' };
   };
-  const getBridgeUI = () => {
-    if (bridgePlatform === 'wa') return { name: 'WhatsApp Qualifizierung', agent: 'KI-Agent (WhatsApp-Hub)', icon: WhatsAppIcon, iconColor: 'text-emerald-400', color: 'text-emerald-400', bubble: 'bg-gradient-to-r from-emerald-600/90 to-green-600/90', bg: 'bg-emerald-500/20 border-emerald-500/30' };
-    if (bridgePlatform === 'dc') return { name: 'Discord Qualifizierung', agent: 'KI-Agent (Discord-Hub)', icon: DiscordIcon, iconColor: 'text-indigo-400', color: 'text-indigo-400', bubble: 'bg-gradient-to-r from-indigo-600/90 to-violet-600/90', bg: 'bg-indigo-500/20 border-indigo-500/30' };
+  const getBridgePhoneUI = () => {
     return { name: 'Telegram Qualifizierung', agent: 'KI-Agent (Telegram-Hub)', icon: TelegramIcon, iconColor: 'text-sky-400', color: 'text-sky-400', bubble: 'bg-gradient-to-r from-cyan-600/90 to-sky-600/90', bg: 'bg-sky-500/20 border-sky-500/30' };
   };
   const getDestUI = () => {
-    if (destPlatform === 'pa') return { name: 'Patreon Chat', symbol: 'PA', agent: 'KI-Agent (Patreon)', color: 'text-orange-400', bubble: 'bg-gradient-to-r from-orange-600/90 to-red-600/90', bg: 'bg-orange-500/20 border-orange-500/30' };
     return { name: 'OnlyFans Chat', symbol: 'OF', agent: 'KI-Agent (Julia)', color: 'text-sky-400', bubble: 'bg-gradient-to-r from-sky-600/90 to-blue-600/90', bg: 'bg-sky-500/20 border-sky-500/30' };
   };
 
   const sourceUI = getSourceUI();
   const SourceIcon = sourceUI.icon;
-  const bridgeUI = getBridgeUI();
+  const bridgeUI = getBridgePhoneUI();
   const BridgeIcon = bridgeUI.icon;
   const destUI = getDestUI();
 
@@ -620,12 +615,6 @@ export default function App() {
             
             {/* Handy 1: Source DM */}
             <div className="flex flex-col gap-4">
-              <select value={sourcePlatform} onChange={(e) => setSourcePlatform(e.target.value)} className="bg-neutral-900/80 border border-white/10 rounded-full px-4 py-2 text-xs text-white font-manrope outline-none cursor-pointer self-center focus:border-white/30 transition-all hover:bg-neutral-800 shadow-xl">
-                <option value="ig">Traffic: Instagram</option>
-                <option value="tw">Traffic: Twitter (X)</option>
-                <option value="wa">Traffic: WhatsApp</option>
-              </select>
-
               <div className="glass-panel rounded-[32px] border border-white/10 p-4 relative bg-neutral-950/40 shadow-2xl h-[480px] flex flex-col justify-between overflow-hidden group hover:border-white/20 transition-all duration-300">
                 {/* Notch / Phone Top */}
                 <div className="absolute top-2 left-1/2 -translate-x-1/2 w-28 h-4 bg-black rounded-full z-20 flex items-center justify-center">
@@ -682,12 +671,6 @@ export default function App() {
 
             {/* Handy 2: Bridge Chat */}
             <div className="flex flex-col gap-4">
-              <select value={bridgePlatform} onChange={(e) => setBridgePlatform(e.target.value)} className="bg-neutral-900/80 border border-white/10 rounded-full px-4 py-2 text-xs text-white font-manrope outline-none cursor-pointer self-center focus:border-white/30 transition-all hover:bg-neutral-800 shadow-xl">
-                <option value="tg">Bridge: Telegram</option>
-                <option value="wa">Bridge: WhatsApp</option>
-                <option value="dc">Bridge: Discord</option>
-              </select>
-
               <div className="glass-panel rounded-[32px] border border-white/10 p-4 relative bg-neutral-950/40 shadow-2xl h-[480px] flex flex-col justify-between overflow-hidden group hover:border-white/20 transition-all duration-300">
                 {/* Notch */}
                 <div className="absolute top-2 left-1/2 -translate-x-1/2 w-28 h-4 bg-black rounded-full z-20 flex items-center justify-center">
@@ -772,11 +755,6 @@ export default function App() {
 
             {/* Handy 3: Conversion */}
             <div className="flex flex-col gap-4">
-              <select value={destPlatform} onChange={(e) => setDestPlatform(e.target.value)} className="bg-neutral-900/80 border border-white/10 rounded-full px-4 py-2 text-xs text-white font-manrope outline-none cursor-pointer self-center focus:border-white/30 transition-all hover:bg-neutral-800 shadow-xl">
-                <option value="of">Conversion: OnlyFans</option>
-                <option value="pa">Conversion: Patreon</option>
-              </select>
-
               <div className="glass-panel rounded-[32px] border border-white/10 p-4 relative bg-neutral-950/40 shadow-2xl h-[480px] flex flex-col justify-between overflow-hidden group hover:border-white/20 transition-all duration-300">
                 {/* Notch */}
                 <div className="absolute top-2 left-1/2 -translate-x-1/2 w-28 h-4 bg-black rounded-full z-20 flex items-center justify-center">
