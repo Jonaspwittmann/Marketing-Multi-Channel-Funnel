@@ -439,7 +439,7 @@ export default function App() {
   const [voiceCloningModel, setVoiceCloningModel] = useState<'none' | 'simple' | 'professional'>('none');
   const [messagesPerCustomer, setMessagesPerCustomer] = useState(5);
   const [voiceMessagesPerLead, setVoiceMessagesPerLead] = useState(1);
-  const [dailyBroadcast, setDailyBroadcast] = useState(false);
+  const [modelAnpassung, setModelAnpassung] = useState<'none' | 'simple' | 'advanced'>('none');
 
   // Funnel Builder States
   const [sourcePlatform, setSourcePlatform] = useState('ig');
@@ -466,7 +466,11 @@ export default function App() {
     if (voiceCloningModel === 'simple') cloningCost = 100;
     else if (voiceCloningModel === 'professional') cloningCost = 500;
 
-    const initialInvestment = setupCost + cloningCost;
+    let modelCost = 0;
+    if (modelAnpassung === 'simple') modelCost = 50;
+    else if (modelAnpassung === 'advanced') modelCost = 100;
+
+    const initialInvestment = setupCost + cloningCost + modelCost;
 
     // Monatliche Kunden/Leads
     const monthlyLeads = typeof monthlyDMs === 'number' ? monthlyDMs : 0;
@@ -486,8 +490,7 @@ export default function App() {
       voiceMinutesTotal = voiceTotalMessages * (10 / 60);  // 10 Sekunden pro Voice = 1/6 Minute
     }
 
-    const broadcastCost = dailyBroadcast ? 149 : 0;
-    const monthlyTotal = messageCost + voiceCost + broadcastCost;
+    const monthlyTotal = messageCost + voiceCost;
 
     // Asiat-Vergleich benchmark: 5 € / Std * 720 Std = 3.600 €
     const asianChatterCost = 3600;
@@ -502,7 +505,7 @@ export default function App() {
       rawSetupCost,
       discountPercentage,
       cloningCost,
-      broadcastCost,
+      modelCost,
       initialInvestment,
       totalMessages,
       messageCost,
@@ -1159,30 +1162,37 @@ export default function App() {
                 </div>
               )}
 
-              {/* Selector: Massen-Broadcast */}
+              {/* Selector: Model Anpassung */}
               <div className="space-y-3 mt-6 pt-6 border-t border-white/5">
                 <div className="flex justify-between items-baseline">
-                  <label className="font-manrope text-sm font-medium text-neutral-300">Täglicher Massen-Broadcast (Optional)</label>
-                  {dailyBroadcast && <span className="text-[9px] bg-sky-500/20 text-sky-300 border border-sky-500/30 px-2 py-0.5 rounded font-bold uppercase tracking-wider">Aktiv</span>}
+                  <label className="font-manrope text-sm font-medium text-neutral-300">KI-Model-Anpassung (Optionales Setup)</label>
+                  {modelAnpassung !== 'none' && <span className="text-[9px] bg-sky-500/20 text-sky-300 border border-sky-500/30 px-2 py-0.5 rounded font-bold uppercase tracking-wider">Aktiv</span>}
                 </div>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-3 gap-3">
                   <button 
                     type="button"
-                    onClick={() => setDailyBroadcast(false)}
-                    className={`p-3 rounded-xl border text-xs font-semibold font-manrope transition-all text-center cursor-pointer ${!dailyBroadcast ? 'bg-white text-black border-white' : 'bg-white/5 text-neutral-400 border-white/5 hover:border-white/10'}`}
+                    onClick={() => setModelAnpassung('none')}
+                    className={`p-3 rounded-xl border text-xs font-semibold font-manrope transition-all text-center cursor-pointer ${modelAnpassung === 'none' ? 'bg-white text-black border-white' : 'bg-white/5 text-neutral-400 border-white/5 hover:border-white/10'}`}
                   >
-                    Nein, nur 1:1 Chats
+                    Keine
                   </button>
                   <button 
                     type="button"
-                    onClick={() => setDailyBroadcast(true)}
-                    className={`p-3 rounded-xl border text-xs font-semibold font-manrope transition-all text-center cursor-pointer ${dailyBroadcast ? 'bg-white text-black border-white' : 'bg-white/5 text-neutral-400 border-white/5 hover:border-white/10'}`}
+                    onClick={() => setModelAnpassung('simple')}
+                    className={`p-3 rounded-xl border text-xs font-semibold font-manrope transition-all text-center cursor-pointer ${modelAnpassung === 'simple' ? 'bg-white text-black border-white' : 'bg-white/5 text-neutral-400 border-white/5 hover:border-white/10'}`}
                   >
-                    Ja, 1x Täglich an alle (149 €/Monat)
+                    Simple (50 €)
+                  </button>
+                  <button 
+                    type="button"
+                    onClick={() => setModelAnpassung('advanced')}
+                    className={`p-3 rounded-xl border text-xs font-semibold font-manrope transition-all text-center cursor-pointer ${modelAnpassung === 'advanced' ? 'bg-white text-black border-white' : 'bg-white/5 text-neutral-400 border-white/5 hover:border-white/10'}`}
+                  >
+                    Advanced (100 €)
                   </button>
                 </div>
                 <p className="text-[10px] text-neutral-500 font-manrope leading-normal">
-                  Massen-Nachrichten werden automatisch an alle Chats vergeben, die bereits existieren, für 149 Euro im Monat.
+                  Einmaliges Setup zur Anpassung des KI-Modells an deinen exakten Schreibstil und Slang.
                 </p>
               </div>
             </div>
@@ -1226,13 +1236,13 @@ export default function App() {
                       </div>
                       <span className="font-semibold text-white shrink-0">{costs.messageCost.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })}</span>
                     </div>
-                    {costs.broadcastCost > 0 && (
+                    {costs.modelCost > 0 && (
                       <div className="flex justify-between items-center border-b border-white/5 pb-2.5 gap-4">
                         <div className="flex flex-col">
-                          <span className="text-sky-300 font-medium">Täglicher Massen-Broadcast</span>
-                          <span className="text-neutral-500 font-normal text-[10px]">1x täglich an alle Kunden (Flatrate)</span>
+                          <span className="text-sky-300 font-medium">KI-Model-Anpassung</span>
+                          <span className="text-neutral-500 font-normal text-[10px]">Individuelles Setup (Einmalig)</span>
                         </div>
-                        <span className="font-semibold text-sky-400 shrink-0">{costs.broadcastCost.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })}</span>
+                        <span className="font-semibold text-sky-400 shrink-0">{costs.modelCost.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })}</span>
                       </div>
                     )}
                   </div>
@@ -1242,13 +1252,13 @@ export default function App() {
                   <div>
                     <div className="text-[10px] text-neutral-500 font-manrope font-semibold uppercase tracking-wider">Einmaliges Setup (Text)</div>
                     <div className="text-lg font-syne font-semibold text-neutral-300 mt-0.5">
-                      {costs.setupCost.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })}
+                      {(costs.setupCost + costs.modelCost).toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })}
                     </div>
                   </div>
                   <div className="text-right">
                     <div className="text-[10px] text-neutral-500 font-manrope font-semibold uppercase tracking-wider">Laufend / Monat</div>
                     <div className="text-lg font-syne font-semibold text-white mt-0.5">
-                      {(costs.messageCost + costs.broadcastCost).toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })}
+                      {(costs.messageCost).toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })}
                     </div>
                   </div>
                 </div>
