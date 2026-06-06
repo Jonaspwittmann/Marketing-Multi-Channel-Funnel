@@ -376,6 +376,7 @@ export default function App() {
   const [voiceCloningModel, setVoiceCloningModel] = useState<'none' | 'simple' | 'professional'>('none');
   const [messagesPerCustomer, setMessagesPerCustomer] = useState(5);
   const [voiceMessagesPerLead, setVoiceMessagesPerLead] = useState(1);
+  const [dailyBroadcast, setDailyBroadcast] = useState(false);
 
   // Calculations for Pricing & ROI Calculator
   const getCalculatedCosts = () => {
@@ -417,7 +418,8 @@ export default function App() {
       voiceMinutesTotal = voiceTotalMessages * (10 / 60);  // 10 Sekunden pro Voice = 1/6 Minute
     }
 
-    const monthlyTotal = messageCost + voiceCost;
+    const broadcastCost = dailyBroadcast ? 149 : 0;
+    const monthlyTotal = messageCost + voiceCost + broadcastCost;
 
     // Asiat-Vergleich benchmark: 5 € / Std * 720 Std = 3.600 €
     const asianChatterCost = 3600;
@@ -432,6 +434,7 @@ export default function App() {
       rawSetupCost,
       discountPercentage,
       cloningCost,
+      broadcastCost,
       initialInvestment,
       totalMessages,
       messageCost,
@@ -980,7 +983,7 @@ export default function App() {
                   })}
                 </div>
                 <p className="text-[10px] text-neutral-500 font-manrope leading-normal">
-                  * Setup-Kosten: Telegram-Kanal <strong>200 €</strong>, jeder andere Kanal <strong>300 €</strong> Setup.
+                  * Einmalige Integration der Standard-Workflows (Telegram: <strong>200 €</strong>, andere Kanäle: <strong>300 €</strong>).
                 </p>
               </div>
 
@@ -1061,6 +1064,33 @@ export default function App() {
                   </div>
                 </div>
               )}
+
+              {/* Selector: Massen-Broadcast */}
+              <div className="space-y-3 mt-6 pt-6 border-t border-white/5">
+                <div className="flex justify-between items-baseline">
+                  <label className="font-manrope text-sm font-medium text-neutral-300">Täglicher Massen-Broadcast (Optional)</label>
+                  {dailyBroadcast && <span className="text-[9px] bg-sky-500/20 text-sky-300 border border-sky-500/30 px-2 py-0.5 rounded font-bold uppercase tracking-wider">Aktiv</span>}
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <button 
+                    type="button"
+                    onClick={() => setDailyBroadcast(false)}
+                    className={`p-3 rounded-xl border text-xs font-semibold font-manrope transition-all text-center cursor-pointer ${!dailyBroadcast ? 'bg-white text-black border-white' : 'bg-white/5 text-neutral-400 border-white/5 hover:border-white/10'}`}
+                  >
+                    Nein, nur 1:1 Chats
+                  </button>
+                  <button 
+                    type="button"
+                    onClick={() => setDailyBroadcast(true)}
+                    className={`p-3 rounded-xl border text-xs font-semibold font-manrope transition-all text-center cursor-pointer ${dailyBroadcast ? 'bg-white text-black border-white' : 'bg-white/5 text-neutral-400 border-white/5 hover:border-white/10'}`}
+                  >
+                    Ja, 1x Täglich an alle (149 €/Monat)
+                  </button>
+                </div>
+                <p className="text-[10px] text-neutral-500 font-manrope leading-normal">
+                  Ideal für Creators: Wir schreiben jeden Tag alle deine Kunden automatisiert an (als Flatrate abgedeckt).
+                </p>
+              </div>
             </div>
 
             {/* Calculations & Results Panel */}
@@ -1102,6 +1132,15 @@ export default function App() {
                       </div>
                       <span className="font-semibold text-white shrink-0">{costs.messageCost.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })}</span>
                     </div>
+                    {costs.broadcastCost > 0 && (
+                      <div className="flex justify-between items-center border-b border-white/5 pb-2.5 gap-4">
+                        <div className="flex flex-col">
+                          <span className="text-sky-300 font-medium">Täglicher Massen-Broadcast</span>
+                          <span className="text-neutral-500 font-normal text-[10px]">1x täglich an alle Kunden (Flatrate)</span>
+                        </div>
+                        <span className="font-semibold text-sky-400 shrink-0">{costs.broadcastCost.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })}</span>
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -1115,7 +1154,7 @@ export default function App() {
                   <div className="text-right">
                     <div className="text-[10px] text-neutral-500 font-manrope font-semibold uppercase tracking-wider">Laufend / Monat</div>
                     <div className="text-lg font-syne font-semibold text-white mt-0.5">
-                      {costs.messageCost.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })}
+                      {(costs.messageCost + costs.broadcastCost).toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })}
                     </div>
                   </div>
                 </div>
