@@ -412,7 +412,7 @@ export default function App() {
     let voiceMinutesTotal = 0;
     if (voiceCloningModel !== 'none') {
       voiceTotalMessages = monthlyLeads * voiceMessagesPerLead;
-      voiceCost = voiceTotalMessages * 0.08;  // 0,08 € pro Voice-Nachricht
+      voiceCost = voiceTotalMessages * 0.20;  // 0,20 € pro Voice-Nachricht
       voiceMinutesTotal = voiceTotalMessages * (10 / 60);  // 10 Sekunden pro Voice = 1/6 Minute
     }
 
@@ -1006,7 +1006,7 @@ export default function App() {
                       <span className="text-purple-300 font-semibold">{costs.voiceMinutes.toLocaleString('de-DE', { maximumFractionDigits: 1 })} Min. / Monat</span>
                     </div>
                     <div className="flex justify-between text-xs pt-1.5 text-white font-semibold border-t border-white/5 mt-1.5">
-                      <span>Laufende Voice-Kosten · 0,08 € / 10 Sek.:</span>
+                      <span>Laufende Voice-Kosten · 0,20 € / 10 Sek.:</span>
                       <span className="text-emerald-400">{costs.voiceCost.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })}</span>
                     </div>
                   </div>
@@ -1087,7 +1087,7 @@ export default function App() {
                       </div>
                       <div className="flex justify-between border-b border-white/5 pb-2.5">
                         <span className="text-neutral-400 flex justify-between w-full">
-                          <span>Laufend: Voice-Generierung · 0,08 € / 10 Sek.</span>
+                          <span>Laufend: Voice-Generierung · 0,20 € / 10 Sek.</span>
                           <span className="text-neutral-500 font-normal">× {costs.voiceTotalMessages.toLocaleString('de-DE')} Msgs</span>
                         </span>
                         <span className="font-semibold text-white">{costs.voiceCost.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })}</span>
