@@ -373,6 +373,7 @@ export default function App() {
   const [selectedChannels, setSelectedChannels] = useState<string[]>(['tg', 'ig']);
   const [voiceCloningModel, setVoiceCloningModel] = useState<'none' | 'simple' | 'professional'>('none');
   const [messagesPerCustomer, setMessagesPerCustomer] = useState(5);
+  const [voiceMessagesPerLead, setVoiceMessagesPerLead] = useState(1);
 
   // Calculations for Pricing & ROI Calculator
   const getCalculatedCosts = () => {
@@ -403,8 +404,7 @@ export default function App() {
     // Anzahl der Kunden = monatliche DMs / DMs pro Kunde
     const monthlyLeads = Math.ceil(totalMessages / messagesPerCustomer);
     
-    // Voice-Messages pro Kunde ist fest auf 1 pro User
-    const voiceMessagesPerLead = 1;
+    // Voice-Messages pro Kunde (über Slider gesteuert)
 
     let voiceCost = 0;
     let voiceTotalMessages = 0;
@@ -976,13 +976,22 @@ export default function App() {
               {/* Info: voiceMessagesPerUser (Only show if voiceCloningModel !== 'none') */}
               {voiceCloningModel !== 'none' && (
                 <div className="space-y-4 p-4 rounded-xl bg-purple-500/5 border border-purple-500/10 animate-fade-in text-left">
-                  <div className="space-y-1">
+                  <div className="space-y-3">
                     <div className="flex justify-between items-baseline">
                       <label className="font-manrope text-sm font-medium text-purple-300">Voice-Nachrichten pro Kunde</label>
-                      <span className="font-syne font-semibold text-base text-purple-300">1 (eine pro User)</span>
+                      <span className="font-syne font-semibold text-lg text-purple-300">{voiceMessagesPerLead}</span>
                     </div>
+                    <input 
+                      type="range" 
+                      min="1" 
+                      max="10" 
+                      step="1"
+                      value={voiceMessagesPerLead} 
+                      onChange={(e) => setVoiceMessagesPerLead(Number(e.target.value))}
+                      className="w-full h-1 bg-white/10 rounded-lg appearance-none cursor-pointer accent-purple-400" 
+                    />
                     <p className="text-[10px] font-manrope text-neutral-500">
-                      Es wird standardmäßig genau eine personalisierte Sprachnachricht via Voice-Cloning an jeden User gesendet.
+                      Die Anzahl an personalisierten Sprachnachrichten, die per Voice-Cloning an jeden User gesendet werden (max. 10).
                     </p>
                   </div>
 
