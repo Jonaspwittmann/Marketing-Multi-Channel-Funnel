@@ -502,7 +502,7 @@ export default function App() {
             </h1>
             
             <p className="font-manrope text-neutral-400 text-base md:text-lg leading-relaxed max-w-2xl mx-auto animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-              Automatisierte Trichter-Systeme mit direkter Weiterleitung auf Telegram zur automatisierten Kundenbindung & Conversion. 24/7-Betrieb, 0% manueller Aufwand.
+              Intelligente KI-Trichter-Systeme mit direkter Weiterleitung auf Telegram. 100% automatisierte Chat-Betreuung durch unsere hochmodernen KI-Agenten. 24/7-Betrieb, 0% manueller Aufwand.
             </p>
 
             <div className="flex flex-col sm:flex-row justify-center gap-4 pt-2 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
@@ -562,7 +562,7 @@ export default function App() {
 
                 {/* Bot Message */}
                 <div className="flex flex-col items-end space-y-1 max-w-[80%] ml-auto">
-                  <span className="text-[8px] text-pink-400 pr-2">Bot (IG-Trigger)</span>
+                  <span className="text-[8px] text-pink-400 pr-2">KI-Agent (IG-Trigger)</span>
                   <div className="bg-gradient-to-r from-pink-600/90 to-purple-600/90 text-white rounded-2xl rounded-tr-none px-3.5 py-2">
                     Ja, sicher, gerne. Folg mir auf Telegram: <span className="underline cursor-pointer">t.me/julia_vip_bot</span> 🤫
                   </div>
@@ -613,7 +613,7 @@ export default function App() {
 
                 {/* Msg 2: Bot */}
                 <div className="flex flex-col items-end space-y-0.5 max-w-[85%] ml-auto">
-                  <span className="text-[8px] text-sky-400 pr-2">Bot (Telegram-Hub)</span>
+                  <span className="text-[8px] text-sky-400 pr-2">KI-Agent (Telegram-Hub)</span>
                   <div className="bg-gradient-to-r from-cyan-600/90 to-sky-600/90 text-white rounded-xl rounded-tr-none px-2.5 py-1">
                     Hey! Schön, dass du den Weg hierher gefunden hast. Ja, hier auf Telegram bin ich viel aktiver und kann dir auch Sprachnachrichten schicken. 😉
                   </div>
@@ -629,7 +629,7 @@ export default function App() {
 
                 {/* Msg 4: Bot */}
                 <div className="flex flex-col items-end space-y-0.5 max-w-[85%] ml-auto">
-                  <span className="text-[8px] text-sky-400 pr-2">Bot (Telegram-Hub)</span>
+                  <span className="text-[8px] text-sky-400 pr-2">KI-Agent (Telegram-Hub)</span>
                   <div className="bg-gradient-to-r from-cyan-600/90 to-sky-600/90 text-white rounded-xl rounded-tr-none px-2.5 py-1">
                     Ja, auf jeden Fall! Ich liebe es, privateren Content zu teilen. Aber sag mal: Wie alt bist du eigentlich und woher kommst du? 😇
                   </div>
@@ -645,7 +645,7 @@ export default function App() {
 
                 {/* Msg 6: Bot */}
                 <div className="flex flex-col items-end space-y-0.5 max-w-[85%] ml-auto">
-                  <span className="text-[8px] text-sky-400 pr-2">Bot (Telegram-Hub)</span>
+                  <span className="text-[8px] text-sky-400 pr-2">KI-Agent (Telegram-Hub)</span>
                   <div className="bg-gradient-to-r from-cyan-600/90 to-sky-600/90 text-white rounded-xl rounded-tr-none px-2.5 py-1">
                     Ich bin auch oft in der Gegend! Hier ist mein exklusiver Einladungslink für dich: onlyfans.com/julia_vip 💋
                   </div>
@@ -694,7 +694,7 @@ export default function App() {
 
                 {/* Bot Message */}
                 <div className="flex flex-col items-end space-y-1 max-w-[80%] ml-auto">
-                  <span className="text-[8px] text-sky-400 pr-2">Bot (Julia)</span>
+                  <span className="text-[8px] text-sky-400 pr-2">KI-Agent (Julia)</span>
                   <div className="bg-gradient-to-r from-sky-600/90 to-blue-600/90 text-white rounded-2xl rounded-tr-none px-3.5 py-2">
                     Ja, ich kann mich voll an dich erinnern, danke, dass du mir jetzt hier folgst. Jetzt kann ich dir auch mal was Cooles zeigen oder so. 😘
                   </div>
