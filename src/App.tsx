@@ -442,7 +442,6 @@ export default function App() {
   const [modelAnpassung, setModelAnpassung] = useState<'neutral' | 'advanced'>('neutral');
 
   // Funnel Builder States
-  const [sourcePlatform, setSourcePlatform] = useState('ig');
   const [bridgePlatform, setBridgePlatform] = useState('tg');
   const [destPlatform, setDestPlatform] = useState('of');
 
@@ -551,7 +550,6 @@ export default function App() {
   const bridgeUI = getBridgePhoneUI();
   const BridgeIcon = bridgeUI.icon;
   const destUI = getDestUI();
-  const DestIcon = destUI.icon;
 
 
 
