@@ -4,7 +4,11 @@ import {
   Check, 
   Send, 
   TrendingUp, 
-  Calculator
+  Calculator,
+  ShieldCheck,
+  BrainCircuit,
+  UserCheck,
+  Globe2
 } from 'lucide-react';
 
 // Custom SVG Icons for consistency and reliability
@@ -497,11 +501,11 @@ export default function App() {
         <section id="konzept" className="scroll-mt-24 pt-8 md:pt-16 space-y-16">
           <div className="max-w-4xl mx-auto space-y-6 text-center">
             <h1 className="font-syne font-semibold text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tight leading-[1.05] text-gradient animate-fade-in-up">
-              Marketing-Funnel für alle Social Medias.
+              Vollautomatisierter KI-Chatter für dein OnlyFans-Wachstum.
             </h1>
             
             <p className="font-manrope text-neutral-400 text-base md:text-lg leading-relaxed max-w-2xl mx-auto animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-              Intelligente KI-Trichter-Systeme mit direkter Weiterleitung auf Telegram. 100% automatisierte Chat-Betreuung durch unsere hochmodernen KI-Agenten. 24/7-Betrieb, 0% manueller Aufwand.
+              Verwandle Social-Media Follower rund um die Uhr in zahlende Abonnenten. Intelligente Chat-Systeme mit sicherer Weiterleitung via Telegram. 100% automatisiert, null Ban-Risiko, 24/7-Betrieb.
             </p>
 
             <div className="flex flex-col sm:flex-row justify-center gap-4 pt-2 animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
@@ -728,21 +732,12 @@ export default function App() {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {[
-                { id: 'wa', name: 'WhatsApp', icon: WhatsAppIcon, activeColor: 'border-emerald-500/40 bg-emerald-500/10 text-emerald-400 shadow-[0_0_20px_rgba(16,185,129,0.15)]', inactiveColor: 'border-white/5 bg-white/[0.02] text-neutral-500 opacity-60 hover:opacity-80 hover:border-white/10', desc: 'Persönlicher Chat-Support und Direct-Marketing auf dem beliebtesten Messenger.' },
-                { id: 'fb', name: 'Facebook', icon: FacebookIcon, activeColor: 'border-blue-500/40 bg-blue-500/10 text-blue-400 shadow-[0_0_20px_rgba(59,130,246,0.15)]', inactiveColor: 'border-white/5 bg-white/[0.02] text-neutral-500 opacity-60 hover:opacity-80 hover:border-white/10', desc: 'Kundenbetreuung und Lead-Qualifizierung über den Messenger.' },
-                { id: 'ig', name: 'Instagram', icon: InstagramIcon, activeColor: 'border-pink-500/40 bg-pink-500/10 text-pink-400 shadow-[0_0_20px_rgba(236,72,153,0.15)]', inactiveColor: 'border-white/5 bg-white/[0.02] text-neutral-500 opacity-60 hover:opacity-80 hover:border-white/10', desc: 'Vollautomatisierte DM-Antworten zur Lead-Qualifizierung und Conversion.' },
-                { id: 'tg', name: 'Telegram', icon: TelegramIcon, activeColor: 'border-cyan-500/40 bg-cyan-500/10 text-cyan-400 shadow-[0_0_20px_rgba(6,182,212,0.15)]', inactiveColor: 'border-white/5 bg-white/[0.02] text-neutral-500 opacity-60 hover:opacity-80 hover:border-white/10', desc: 'Zentraler Hub zur Kundenbindung, Beziehungsaufbau und OnlyFans Conversion.' },
-                { id: 'im', name: 'iMessage', icon: IMessageIcon, activeColor: 'border-blue-500/40 bg-blue-500/10 text-blue-500 shadow-[0_0_20px_rgba(59,130,246,0.15)]', inactiveColor: 'border-white/5 bg-white/[0.02] text-neutral-500 opacity-60 hover:opacity-80 hover:border-white/10', desc: 'Apple-native Integration für premium Leads und Conversion.' },
-                { id: 'si', name: 'Signal', icon: SignalIcon, activeColor: 'border-blue-400/40 bg-blue-400/10 text-blue-300 shadow-[0_0_20px_rgba(96,165,250,0.15)]', inactiveColor: 'border-white/5 bg-white/[0.02] text-neutral-500 opacity-60 hover:opacity-80 hover:border-white/10', desc: 'Datenschutz-fokussierte Kommunikation für High-Ticket Kunden.' },
-                { id: 'tw', name: 'Twitter (X)', icon: TwitterIcon, activeColor: 'border-sky-500/40 bg-sky-500/10 text-sky-400 shadow-[0_0_20px_rgba(56,189,248,0.15)]', inactiveColor: 'border-white/5 bg-white/[0.02] text-neutral-500 opacity-60 hover:opacity-80 hover:border-white/10', desc: 'Direkte Kundenansprache und vollautomatisierte Funnels via DMs.' },
-                { id: 'sl', name: 'Slack', icon: SlackIcon, activeColor: 'border-fuchsia-500/40 bg-fuchsia-500/10 text-fuchsia-400 shadow-[0_0_20px_rgba(232,121,249,0.15)]', inactiveColor: 'border-white/5 bg-white/[0.02] text-neutral-500 opacity-60 hover:opacity-80 hover:border-white/10', desc: 'B2B Funnels und direkter Kontakt in professionellen Communities.' },
-                { id: 'gc', name: 'Google Chat', icon: GoogleChatIcon, activeColor: 'border-green-500/40 bg-green-500/10 text-green-500 shadow-[0_0_20px_rgba(34,197,94,0.15)]', inactiveColor: 'border-white/5 bg-white/[0.02] text-neutral-500 opacity-60 hover:opacity-80 hover:border-white/10', desc: 'Nahtlose Integration in den Google Workspace von Firmenkunden.' },
-                { id: 'li', name: 'LinkedIn', icon: LinkedInIcon, activeColor: 'border-sky-500/40 bg-sky-500/10 text-sky-500 shadow-[0_0_20px_rgba(14,165,233,0.15)]', inactiveColor: 'border-white/5 bg-white/[0.02] text-neutral-500 opacity-60 hover:opacity-80 hover:border-white/10', desc: 'Vollautomatisierte B2B-Antworten zur Lead-Qualifizierung.' },
-                { id: 'dc', name: 'Discord', icon: DiscordIcon, activeColor: 'border-indigo-500/40 bg-indigo-500/10 text-indigo-400 shadow-[0_0_20px_rgba(99,102,241,0.15)]', inactiveColor: 'border-white/5 bg-white/[0.02] text-neutral-500 opacity-60 hover:opacity-80 hover:border-white/10', desc: 'Community-Building und direkte Ansprache über Discord-DMs.' },
-                { id: 'wc', name: 'WeChat', icon: WeChatIcon, activeColor: 'border-green-500/40 bg-green-500/10 text-green-400 shadow-[0_0_20px_rgba(74,222,128,0.15)]', inactiveColor: 'border-white/5 bg-white/[0.02] text-neutral-500 opacity-60 hover:opacity-80 hover:border-white/10', desc: 'Erschließung des asiatischen Marktes über die Super-App.' },
-                { id: 'ln', name: 'Line', icon: LineIcon, activeColor: 'border-emerald-500/40 bg-emerald-500/10 text-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.15)]', inactiveColor: 'border-white/5 bg-white/[0.02] text-neutral-500 opacity-60 hover:opacity-80 hover:border-white/10', desc: 'Massenmarkt-Reach in Japan und Südostasien.' },
-                { id: 'qq', name: 'Tencent QQ', icon: QQIcon, activeColor: 'border-orange-500/40 bg-orange-500/10 text-orange-400 shadow-[0_0_20px_rgba(251,146,60,0.15)]', inactiveColor: 'border-white/5 bg-white/[0.02] text-neutral-500 opacity-60 hover:opacity-80 hover:border-white/10', desc: 'Automatisierung für eine der größten Plattformen in Asien.' },
-                { id: 'tt', name: 'TikTok', icon: TikTokIcon, activeColor: 'border-rose-500/40 bg-rose-500/10 text-rose-450 shadow-[0_0_20px_rgba(244,63,94,0.15)]', inactiveColor: 'border-white/5 bg-white/[0.02] text-neutral-500 opacity-60 hover:opacity-80 hover:border-white/10', desc: 'Automatisierte DMs für massive Reichweite und junge Zielgruppen.' }
+                { id: 'wa', name: 'WhatsApp', icon: WhatsAppIcon, activeColor: 'border-emerald-500/40 bg-emerald-500/10 text-emerald-400 shadow-[0_0_20px_rgba(16,185,129,0.15)]', inactiveColor: 'border-white/5 bg-white/[0.02] text-neutral-500 opacity-60 hover:opacity-80 hover:border-white/10' },
+                { id: 'fb', name: 'Facebook', icon: FacebookIcon, activeColor: 'border-blue-500/40 bg-blue-500/10 text-blue-400 shadow-[0_0_20px_rgba(59,130,246,0.15)]', inactiveColor: 'border-white/5 bg-white/[0.02] text-neutral-500 opacity-60 hover:opacity-80 hover:border-white/10' },
+                { id: 'ig', name: 'Instagram', icon: InstagramIcon, activeColor: 'border-pink-500/40 bg-pink-500/10 text-pink-400 shadow-[0_0_20px_rgba(236,72,153,0.15)]', inactiveColor: 'border-white/5 bg-white/[0.02] text-neutral-500 opacity-60 hover:opacity-80 hover:border-white/10' },
+                { id: 'tg', name: 'Telegram', icon: TelegramIcon, activeColor: 'border-cyan-500/40 bg-cyan-500/10 text-cyan-400 shadow-[0_0_20px_rgba(6,182,212,0.15)]', inactiveColor: 'border-white/5 bg-white/[0.02] text-neutral-500 opacity-60 hover:opacity-80 hover:border-white/10' },
+                { id: 'tw', name: 'Twitter (X)', icon: TwitterIcon, activeColor: 'border-sky-500/40 bg-sky-500/10 text-sky-400 shadow-[0_0_20px_rgba(56,189,248,0.15)]', inactiveColor: 'border-white/5 bg-white/[0.02] text-neutral-500 opacity-60 hover:opacity-80 hover:border-white/10' },
+                { id: 'tt', name: 'TikTok', icon: TikTokIcon, activeColor: 'border-rose-500/40 bg-rose-500/10 text-rose-450 shadow-[0_0_20px_rgba(244,63,94,0.15)]', inactiveColor: 'border-white/5 bg-white/[0.02] text-neutral-500 opacity-60 hover:opacity-80 hover:border-white/10' }
               ].map((platform, idx) => {
                 const IconComponent = platform.icon;
                 const isSelected = selectedChannels.includes(platform.id);
@@ -774,9 +769,6 @@ export default function App() {
                         {setupPrice}
                       </span>
                     </div>
-                    <p className="font-manrope text-[10.5px] text-neutral-400 text-left leading-normal">
-                      {platform.desc}
-                    </p>
                     <div className="flex items-center justify-between pt-1 border-t border-white/5">
                       <span className={`text-[8px] font-bold uppercase tracking-wider ${
                         isSelected ? 'text-emerald-400' : 'text-neutral-550'
@@ -1246,6 +1238,62 @@ export default function App() {
               <div className="text-[10px] text-red-400 uppercase tracking-widest font-bold mb-1">Volle 24/7 Erreichbarkeit</div>
               <p className="text-[10px] text-neutral-400 leading-relaxed">
                 Um {costs.channelsCount} Kanäle 24/7 abzudecken, fallen 720 Stunden pro Monat an. Das kostet selbst mit sehr günstigen Kräften aus Übersee (5 €/Std.) mindestens {costs.asianChatterCost.toLocaleString('de-DE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 })} monatlich. Unser KI-Funnel antwortet autonom auf DMs, ohne Urlaubszeiten oder Ermüdung, wodurch du sofort Tausende Euro an Fixkosten einsparst, dank effizienter API-Strukturen und Server-Routings.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ & TRUST FACTORS */}
+        <section id="faq" className="scroll-mt-24 space-y-12">
+          <div className="text-center space-y-4">
+            <h2 className="font-syne font-semibold text-2xl md:text-4xl text-white">Häufige Fragen (FAQ)</h2>
+            <p className="font-manrope text-neutral-400 max-w-xl mx-auto">
+              Alles was du über Ban-Sicherheit, Voice-Cloning und den laufenden Betrieb wissen musst.
+            </p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+            {/* FAQ 1 */}
+            <div className="glass-panel border border-white/5 rounded-2xl p-6 space-y-3 hover:scale-[1.02] transition-transform duration-300">
+              <h4 className="text-white font-syne font-semibold text-lg flex items-center gap-2">
+                <ShieldCheck className="h-5 w-5 text-emerald-400" />
+                Ist mein Instagram sicher vor Bans?
+              </h4>
+              <p className="text-neutral-400 font-manrope text-sm leading-relaxed">
+                Absolut. Wir nutzen keine billigen Scraping-Bots. Unsere Systeme sind direkt an offizielle APIs angebunden oder verwenden hochkomplexe, menschlich agierende Interfaces (inkl. Tipp-Verzögerungen). So bleibt dein Account 100% sicher.
+              </p>
+            </div>
+            
+            {/* FAQ 2 */}
+            <div className="glass-panel border border-white/5 rounded-2xl p-6 space-y-3 hover:scale-[1.02] transition-transform duration-300">
+              <h4 className="text-white font-syne font-semibold text-lg flex items-center gap-2">
+                <BrainCircuit className="h-5 w-5 text-purple-400" />
+                Flirtet die KI wirklich wie ich?
+              </h4>
+              <p className="text-neutral-400 font-manrope text-sm leading-relaxed">
+                Ja. Wir trainieren das KI-Modell individuell auf Basis deiner bisherigen Chat-Historie. Dein Slang, deine bevorzugten Emojis und dein "Vibe" werden komplett kopiert. Fans merken nicht, dass sie mit einer KI schreiben.
+              </p>
+            </div>
+
+            {/* FAQ 3 */}
+            <div className="glass-panel border border-white/5 rounded-2xl p-6 space-y-3 hover:scale-[1.02] transition-transform duration-300">
+              <h4 className="text-white font-syne font-semibold text-lg flex items-center gap-2">
+                <UserCheck className="h-5 w-5 text-blue-400" />
+                Können meine Chatter jederzeit übernehmen?
+              </h4>
+              <p className="text-neutral-400 font-manrope text-sm leading-relaxed">
+                Ja! Das System verfügt über einen nahtlosen "Human Handoff". Sobald jemand z.B. nach Custom-Content fragt, kann ein Mensch den Chat im Dashboard sofort und unbemerkt übernehmen.
+              </p>
+            </div>
+
+            {/* FAQ 4 */}
+            <div className="glass-panel border border-white/5 rounded-2xl p-6 space-y-3 hover:scale-[1.02] transition-transform duration-300">
+              <h4 className="text-white font-syne font-semibold text-lg flex items-center gap-2">
+                <Globe2 className="h-5 w-5 text-cyan-400" />
+                Welche Sprachen werden unterstützt?
+              </h4>
+              <p className="text-neutral-400 font-manrope text-sm leading-relaxed">
+                Unsere Modelle sprechen über 30 Sprachen fließend (inkl. Englisch, Deutsch, Spanisch). Das Voice-Cloning kann deine Stimme sogar fehlerfrei ins Englische übersetzen. Perfekt für internationale Reichweite!
               </p>
             </div>
           </div>
