@@ -255,7 +255,7 @@ const BigFunnelTrichter = ({ selectedChannels, setSelectedChannels, hubChannel, 
         
         {/* Tier 1: Social Media Sources */}
         <div className="w-full">
-          <div className="text-center text-[10px] text-neutral-505 uppercase tracking-widest font-semibold mb-4">1. Traffic-Quellen (Social Media) - Zum Aktivieren anklicken</div>
+          <div className="text-center text-[10px] text-neutral-505 uppercase tracking-widest font-semibold mb-4">1. Traffic-Quellen (Social Media) zum Aktivieren anklicken</div>
           <div className="flex flex-wrap justify-center gap-2.5">
             {channels.map((sm) => {
               const IconComponent = sm.icon;
@@ -1476,7 +1476,7 @@ export default function App() {
                 Können meine Chatter jederzeit übernehmen?
               </h4>
               <p className="text-neutral-400 font-manrope text-sm leading-relaxed">
-                Ja, das System bietet einen nahtlosen Human Handover. Deine Chatter können jederzeit und unbemerkt in die Konversation einsteigen – direkt und komfortabel über unser dediziertes, übersichtliches Chat-Interface.
+                Ja, das System bietet einen nahtlosen Human Handover. Deine Chatter können jederzeit und unbemerkt in die Konversation einsteigen. Das funktioniert direkt und komfortabel über unser dediziertes, übersichtliches Chat-Interface.
               </p>
             </div>
 
