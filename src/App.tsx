@@ -8,7 +8,9 @@ import {
   ShieldCheck,
   BrainCircuit,
   UserCheck,
-  Globe2
+  Globe2,
+  Star,
+  Camera
 } from 'lucide-react';
 
 // Custom SVG Icons for consistency and reliability
@@ -99,6 +101,16 @@ const OnlyFansIcon = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
+const PatreonIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    {...props}
+  >
+    <path d="M22.957 7.21c-.004-3.064-2.391-5.576-5.191-6.482-3.478-1.125-8.064-.962-11.384.604C2.357 3.231 1.093 7.391 1.046 11.54c-.039 3.411.302 12.396 5.369 12.46 3.765.047 4.326-4.804 6.068-7.141 1.24-1.662 2.836-2.132 4.801-2.618 3.376-.836 5.678-3.501 5.673-7.031Z" />
+  </svg>
+);
+
 
 
 const LinkedInIcon = (props: React.SVGProps<SVGSVGElement>) => (
@@ -178,9 +190,11 @@ interface BigFunnelTrichterProps {
   setSelectedChannels: React.Dispatch<React.SetStateAction<string[]>>;
   hubChannel: string;
   setHubChannel: React.Dispatch<React.SetStateAction<string>>;
+  destChannel: string;
+  setDestChannel: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const BigFunnelTrichter = ({ selectedChannels, setSelectedChannels, hubChannel, setHubChannel }: BigFunnelTrichterProps) => {
+const BigFunnelTrichter = ({ selectedChannels, setSelectedChannels, hubChannel, setHubChannel, destChannel, setDestChannel }: BigFunnelTrichterProps) => {
   const toggleChannel = (id: string) => {
     setSelectedChannels(prev => {
       if (prev.includes(id)) {
@@ -222,6 +236,16 @@ const BigFunnelTrichter = ({ selectedChannels, setSelectedChannels, hubChannel, 
     }
   };
   const hubStyles = getHubStyles();
+
+  const getDestStyles = () => {
+    switch(destChannel) {
+      case 'pa': return { bg: 'from-orange-500/10 via-orange-500/20 to-orange-500/10', border: 'border-orange-500/40', shadow: 'shadow-[0_0_30px_rgba(249,115,22,0.15)]', text: 'text-orange-400', glow: 'bg-orange-500 shadow-[0_0_10px_#f97316]', iconBg: 'bg-orange-500/10 border-orange-500/35', pulse: 'bg-orange-500 shadow-[0_0_6px_#f97316]' };
+      case 'fa': return { bg: 'from-blue-500/10 via-blue-500/20 to-blue-500/10', border: 'border-blue-500/40', shadow: 'shadow-[0_0_30px_rgba(59,130,246,0.15)]', text: 'text-blue-400', glow: 'bg-blue-500 shadow-[0_0_10px_#3b82f6]', iconBg: 'bg-blue-500/10 border-blue-500/35', pulse: 'bg-blue-500 shadow-[0_0_6px_#3b82f6]' };
+      case 'my': return { bg: 'from-fuchsia-500/10 via-fuchsia-500/20 to-fuchsia-500/10', border: 'border-fuchsia-500/40', shadow: 'shadow-[0_0_30px_rgba(217,70,239,0.15)]', text: 'text-fuchsia-400', glow: 'bg-fuchsia-500 shadow-[0_0_10px_#d946ef]', iconBg: 'bg-fuchsia-500/10 border-fuchsia-500/35', pulse: 'bg-fuchsia-500 shadow-[0_0_6px_#d946ef]' };
+      default: return { bg: 'from-emerald-500/10 via-emerald-500/20 to-emerald-500/10', border: 'border-emerald-500/40', shadow: 'shadow-[0_0_30px_rgba(16,185,129,0.15)]', text: 'text-emerald-400', glow: 'bg-emerald-500 shadow-[0_0_10px_#10b981]', iconBg: 'bg-emerald-500/10 border-emerald-500/35', pulse: 'bg-emerald-500 shadow-[0_0_6px_#10b981]' };
+    }
+  };
+  const destStyles = getDestStyles();
 
   return (
     <div className="w-full max-w-4xl mx-auto my-12 glass-panel rounded-3xl border border-white/5 p-8 relative overflow-hidden bg-neutral-950/40 animate-fade-in">
@@ -324,8 +348,11 @@ const BigFunnelTrichter = ({ selectedChannels, setSelectedChannels, hubChannel, 
                   <span className={`h-2 w-2 rounded-full animate-pulse ml-1 ${hubStyles.pulse}`} />
                 )}
               </div>
-              <div className="font-manrope text-xs text-neutral-400">
-                Link für Onlyfans
+              <div className="font-manrope text-xs text-neutral-400 mt-1">
+                Link für Conversion
+              </div>
+              <div className="text-[10px] text-amber-400 font-bold mt-1.5 bg-amber-400/10 px-2 py-0.5 rounded-md inline-block border border-amber-400/20">
+                100% Custom Bridge
               </div>
             </div>
           </div>
@@ -360,27 +387,38 @@ const BigFunnelTrichter = ({ selectedChannels, setSelectedChannels, hubChannel, 
         {/* Tier 3: Final Conversion Drop */}
         <div className={`relative w-[90%] max-w-md bg-gradient-to-r border rounded-2xl p-5 flex items-center transition-all duration-300 group ${
           isHubActive
-            ? 'from-emerald-500/10 via-emerald-500/20 to-emerald-500/10 border-emerald-500/40 opacity-100 scale-[1.01] shadow-[0_0_30px_rgba(16,185,129,0.15)]'
+            ? `${destStyles.bg} ${destStyles.border} opacity-100 scale-[1.01] ${destStyles.shadow}`
             : 'from-neutral-900/5 via-neutral-900/10 to-neutral-900/5 border-white/5 opacity-30'
         }`}>
           {isHubActive && (
-            <div className="absolute left-0 top-0 bottom-0 w-1.5 bg-emerald-500 rounded-l-2xl shadow-[0_0_10px_#10b981]" />
+            <div className={`absolute left-0 top-0 bottom-0 w-1.5 rounded-l-2xl ${destStyles.glow}`} />
           )}
           <div className="flex items-center gap-4 pl-2 text-left w-full">
             <div className={`h-10 w-10 rounded-xl flex items-center justify-center border transition-colors ${
-              isHubActive ? 'bg-emerald-500/10 border-emerald-500/35 text-emerald-400' : 'bg-white/5 border-white/5 text-neutral-500'
+              isHubActive ? `${destStyles.iconBg} ${destStyles.text}` : 'bg-white/5 border-white/5 text-neutral-500'
             }`}>
-              <Check className="h-5 w-5" />
+              {destChannel === 'pa' ? <PatreonIcon className="h-5 w-5" /> : destChannel === 'fa' ? <Star className="h-5 w-5" /> : destChannel === 'my' ? <Camera className="h-5 w-5" /> : <OnlyFansIcon className="h-5 w-5" />}
             </div>
             <div>
               <div className={`font-syne font-semibold text-base flex items-center gap-1.5 ${isHubActive ? 'text-white' : 'text-neutral-450'}`}>
-                3. OnlyFans / Patreon
+                3. 
+                <select 
+                  value={destChannel}
+                  onChange={(e) => setDestChannel(e.target.value)}
+                  onClick={(e) => e.stopPropagation()}
+                  className="bg-transparent border-b border-white/20 text-white font-syne outline-none cursor-pointer hover:border-white/50 pb-0.5 ml-1"
+                >
+                  <option value="of" className="bg-neutral-900 text-sm">OnlyFans</option>
+                  <option value="pa" className="bg-neutral-900 text-sm">Patreon</option>
+                  <option value="fa" className="bg-neutral-900 text-sm">Fansly</option>
+                  <option value="my" className="bg-neutral-900 text-sm">Mym</option>
+                </select>
                 {isHubActive && (
-                  <span className="h-2 w-2 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_6px_#10b981]" />
+                  <span className={`h-2 w-2 rounded-full animate-pulse ml-1 ${destStyles.pulse}`} />
                 )}
               </div>
               <div className="font-manrope text-xs text-neutral-400">
-                Abschluss
+                Abschluss & Monetarisierung
               </div>
             </div>
           </div>
@@ -906,6 +944,8 @@ export default function App() {
             setSelectedChannels={setSelectedChannels} 
             hubChannel={bridgePlatform}
             setHubChannel={setBridgePlatform}
+            destChannel={destPlatform}
+            setDestChannel={setDestPlatform}
           />
         </section>
 
