@@ -846,6 +846,7 @@ export default function App() {
                           setMonthlyDMs(Number(valStr));
                         }
                       }}
+                      onFocus={(e) => e.target.select()}
                       onBlur={() => {
                         if (monthlyDMs === '' || Number(monthlyDMs) <= 0) {
                           setMonthlyDMs(1);
