@@ -439,7 +439,7 @@ export default function App() {
   const [voiceCloningModel, setVoiceCloningModel] = useState<'none' | 'simple' | 'professional'>('none');
   const [messagesPerCustomer, setMessagesPerCustomer] = useState(5);
   const [voiceMessagesPerLead, setVoiceMessagesPerLead] = useState(1);
-  const [modelAnpassung, setModelAnpassung] = useState<'none' | 'simple' | 'advanced'>('none');
+  const [modelAnpassung, setModelAnpassung] = useState<'neutral' | 'advanced'>('neutral');
 
   // Funnel Builder States
   const [sourcePlatform, setSourcePlatform] = useState('ig');
@@ -467,8 +467,7 @@ export default function App() {
     else if (voiceCloningModel === 'professional') cloningCost = 500;
 
     let modelCost = 0;
-    if (modelAnpassung === 'simple') modelCost = 50;
-    else if (modelAnpassung === 'advanced') modelCost = 100;
+    if (modelAnpassung === 'advanced') modelCost = 500;
 
     const initialInvestment = setupCost + cloningCost + modelCost;
 
@@ -1166,29 +1165,22 @@ export default function App() {
               <div className="space-y-3 mt-6 pt-6 border-t border-white/5">
                 <div className="flex justify-between items-baseline">
                   <label className="font-manrope text-sm font-medium text-neutral-300">KI-Model-Anpassung (Optionales Setup)</label>
-                  {modelAnpassung !== 'none' && <span className="text-[9px] bg-sky-500/20 text-sky-300 border border-sky-500/30 px-2 py-0.5 rounded font-bold uppercase tracking-wider">Aktiv</span>}
+                  {modelAnpassung !== 'neutral' && <span className="text-[9px] bg-sky-500/20 text-sky-300 border border-sky-500/30 px-2 py-0.5 rounded font-bold uppercase tracking-wider">Aktiv</span>}
                 </div>
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid grid-cols-2 gap-3">
                   <button 
                     type="button"
-                    onClick={() => setModelAnpassung('none')}
-                    className={`p-3 rounded-xl border text-xs font-semibold font-manrope transition-all text-center cursor-pointer ${modelAnpassung === 'none' ? 'bg-white text-black border-white' : 'bg-white/5 text-neutral-400 border-white/5 hover:border-white/10'}`}
+                    onClick={() => setModelAnpassung('neutral')}
+                    className={`p-3 rounded-xl border text-xs font-semibold font-manrope transition-all text-center cursor-pointer ${modelAnpassung === 'neutral' ? 'bg-white text-black border-white' : 'bg-white/5 text-neutral-400 border-white/5 hover:border-white/10'}`}
                   >
-                    Keine
-                  </button>
-                  <button 
-                    type="button"
-                    onClick={() => setModelAnpassung('simple')}
-                    className={`p-3 rounded-xl border text-xs font-semibold font-manrope transition-all text-center cursor-pointer ${modelAnpassung === 'simple' ? 'bg-white text-black border-white' : 'bg-white/5 text-neutral-400 border-white/5 hover:border-white/10'}`}
-                  >
-                    Simple (50 €)
+                    Neutral (0 €)
                   </button>
                   <button 
                     type="button"
                     onClick={() => setModelAnpassung('advanced')}
                     className={`p-3 rounded-xl border text-xs font-semibold font-manrope transition-all text-center cursor-pointer ${modelAnpassung === 'advanced' ? 'bg-white text-black border-white' : 'bg-white/5 text-neutral-400 border-white/5 hover:border-white/10'}`}
                   >
-                    Advanced (100 €)
+                    Advanced Personality (500 €)
                   </button>
                 </div>
                 <p className="text-[10px] text-neutral-500 font-manrope leading-normal">
