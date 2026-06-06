@@ -54,6 +54,12 @@
   color-scheme: dark;
 }
 
+html {
+  touch-action: manipulation;
+  -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -61,6 +67,7 @@ body {
   color: hsl(var(--foreground));
   font-family: 'Manrope', sans-serif;
   overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
   
   /* Radial gradient at the top matching wittmann.one */
   background-image: radial-gradient(
@@ -70,6 +77,14 @@ body {
     transparent 70%
   );
   background-attachment: fixed;
+}
+
+/* Prevent zoom on input focus (iOS) */
+input[type="number"],
+input[type="range"],
+select,
+textarea {
+  font-size: 16px !important;
 }
 
 /* Custom scrollbar */

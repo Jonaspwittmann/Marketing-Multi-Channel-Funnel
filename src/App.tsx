@@ -248,7 +248,7 @@ const BigFunnelTrichter = ({ selectedChannels, setSelectedChannels, hubChannel, 
   const destStyles = getDestStyles();
 
   return (
-    <div className="w-full max-w-4xl mx-auto my-12 glass-panel rounded-3xl border border-white/5 p-8 relative overflow-hidden bg-neutral-950/40 animate-fade-in">
+    <div className="w-full max-w-4xl mx-auto my-12 glass-panel rounded-3xl border border-white/5 p-4 sm:p-8 relative overflow-hidden bg-neutral-950/40 animate-fade-in">
       <div className="absolute top-0 right-0 p-4 text-[10px] uppercase font-bold tracking-widest text-neutral-500">Funnel Architektur</div>
       
       <div className="flex flex-col items-center space-y-8 relative">
@@ -264,7 +264,7 @@ const BigFunnelTrichter = ({ selectedChannels, setSelectedChannels, hubChannel, 
                 <button
                   key={sm.id}
                   onClick={() => toggleChannel(sm.id)}
-                  className={`flex flex-col items-center justify-center border px-3 py-2 rounded-xl gap-1 transition-all duration-300 min-w-[95px] cursor-pointer ${
+                  className={`flex flex-col items-center justify-center border px-2 sm:px-3 py-2 rounded-xl gap-1 transition-all duration-300 min-w-[70px] sm:min-w-[95px] cursor-pointer ${
                     isSelected ? sm.activeColor : sm.inactiveColor
                   }`}
                 >
@@ -585,13 +585,13 @@ export default function App() {
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-36">
+      <main className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-20 sm:space-y-36">
 
         {/* KONZEPT SECTION */}
         <section id="konzept" className="scroll-mt-24 pt-8 md:pt-16 space-y-16">
           <div className="max-w-4xl mx-auto space-y-6 text-center">
-            <h1 className="font-syne font-semibold tracking-tight leading-[1.05] animate-fade-in-up flex flex-col gap-2">
-              <span className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-gradient">
+            <h1 className="font-syne font-semibold tracking-tight leading-[1.05] animate-fade-in-up flex flex-col gap-1 sm:gap-2">
+              <span className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl text-gradient">
                 Vollautomatisierter KI-Chat
               </span>
               <span className="text-2xl sm:text-3xl md:text-4xl text-white/90">
@@ -963,7 +963,7 @@ export default function App() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-8">
             <button onClick={() => {
               setSelectedChannels(['ig']);
               setModelAnpassung('neutral');
