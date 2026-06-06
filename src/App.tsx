@@ -970,27 +970,45 @@ export default function App() {
               setSelectedChannels(['ig']);
               setModelAnpassung('neutral');
               setVoiceCloningModel('none');
-            }} className="p-4 border border-white/5 rounded-2xl bg-white/5 hover:bg-white/10 transition text-left space-y-2 cursor-pointer">
-              <div className="text-white font-syne font-bold">Starter Setup</div>
-              <div className="text-neutral-400 text-xs font-manrope">1 Kanal + Neutral AI</div>
+            }} className="p-4 border border-white/5 rounded-2xl bg-white/5 hover:bg-white/10 transition text-left space-y-3 cursor-pointer">
+              <div>
+                <div className="text-white font-syne font-bold text-lg">Starter Setup</div>
+                <div className="text-neutral-400 text-xs font-manrope">Instagram + Neutral AI</div>
+              </div>
+              <div className="space-y-1">
+                <div className="text-[11px] text-neutral-300 font-semibold bg-white/10 px-2 py-1 rounded inline-block">Einmalig: 300 €</div>
+                <div className="text-[11px] text-neutral-400 font-medium px-2">Monatlich: 0 € + Msg-Kosten</div>
+              </div>
             </button>
             <button onClick={() => {
               setSelectedChannels(['ig', 'tg']);
               setModelAnpassung('advanced');
               setVoiceCloningModel('simple');
-            }} className="p-4 border border-sky-500/30 rounded-2xl bg-sky-500/5 hover:bg-sky-500/10 transition text-left space-y-2 relative overflow-hidden cursor-pointer">
-              <div className="absolute top-0 right-0 bg-sky-500 text-[8px] font-bold px-2 py-0.5 rounded-bl-lg uppercase tracking-wider">Beliebt</div>
-              <div className="text-white font-syne font-bold">Pro Agency</div>
-              <div className="text-neutral-400 text-xs font-manrope">IG + TG + Advanced AI + Simple Voice</div>
+            }} className="p-4 border border-sky-500/30 rounded-2xl bg-sky-500/5 hover:bg-sky-500/10 transition text-left space-y-3 relative overflow-hidden cursor-pointer">
+              <div className="absolute top-0 right-0 bg-sky-500 text-[8px] font-bold px-2 py-0.5 rounded-bl-lg uppercase tracking-wider text-white">Beliebt</div>
+              <div>
+                <div className="text-white font-syne font-bold text-lg">Pro Agency</div>
+                <div className="text-neutral-400 text-xs font-manrope">IG + TG + Adv. AI + Simple Voice</div>
+              </div>
+              <div className="space-y-1">
+                <div className="text-[11px] text-sky-200 font-semibold bg-sky-500/20 px-2 py-1 rounded inline-block border border-sky-500/30">Einmalig: 1.100 €</div>
+                <div className="text-[11px] text-neutral-400 font-medium px-2">Monatlich: 149 € + Msg-Kosten</div>
+              </div>
             </button>
             <button onClick={() => {
-              setSelectedChannels(['ig', 'tg', 'of', 'wa']);
+              setSelectedChannels(['fb', 'tw', 'tg', 'ig', 'wa']);
               setModelAnpassung('advanced');
               setVoiceCloningModel('professional');
-            }} className="p-4 border border-purple-500/30 rounded-2xl bg-purple-500/5 hover:bg-purple-500/10 transition text-left space-y-2 relative overflow-hidden cursor-pointer">
+            }} className="p-4 border border-purple-500/30 rounded-2xl bg-purple-500/5 hover:bg-purple-500/10 transition text-left space-y-3 relative overflow-hidden cursor-pointer">
               <div className="absolute top-0 right-0 bg-purple-500 text-[8px] font-bold px-2 py-0.5 rounded-bl-lg uppercase tracking-wider text-white">Elite</div>
-              <div className="text-white font-syne font-bold">Elite Bundle</div>
-              <div className="text-neutral-400 text-xs font-manrope">Multi-Channel + Advanced AI + Pro Voice</div>
+              <div>
+                <div className="text-white font-syne font-bold text-lg">Elite Bundle</div>
+                <div className="text-neutral-400 text-[11px] font-manrope leading-tight">FB, TW, TG, IG, WA + Adv. AI + Pro Voice</div>
+              </div>
+              <div className="space-y-1">
+                <div className="text-[11px] text-purple-200 font-semibold bg-purple-500/20 px-2 py-1 rounded inline-block border border-purple-500/30">Einmalig: 2.400 €</div>
+                <div className="text-[11px] text-neutral-400 font-medium px-2">Monatlich: 149 € + Msg-Kosten</div>
+              </div>
             </button>
           </div>
 
