@@ -378,6 +378,11 @@ export default function App() {
   const [voiceMessagesPerLead, setVoiceMessagesPerLead] = useState(1);
   const [dailyBroadcast, setDailyBroadcast] = useState(false);
 
+  // Funnel Builder States
+  const [sourcePlatform, setSourcePlatform] = useState('ig');
+  const [bridgePlatform, setBridgePlatform] = useState('tg');
+  const [destPlatform, setDestPlatform] = useState('of');
+
   // Calculations for Pricing & ROI Calculator
   const getCalculatedCosts = () => {
     const channelsCount = selectedChannels.length;
@@ -461,6 +466,26 @@ export default function App() {
       el.scrollIntoView({ behavior: 'smooth' });
     }
   };
+  const getSourceUI = () => {
+    if (sourcePlatform === 'tw') return { name: 'Twitter Direct Message', agent: 'KI-Agent (TW-Trigger)', icon: TwitterIcon, iconColor: 'text-sky-400', color: 'text-sky-400', bubble: 'bg-gradient-to-r from-sky-600/90 to-blue-600/90', bg: 'from-sky-500 via-blue-500 to-indigo-500' };
+    if (sourcePlatform === 'wa') return { name: 'WhatsApp Chat', agent: 'KI-Agent (WA-Trigger)', icon: WhatsAppIcon, iconColor: 'text-emerald-400', color: 'text-emerald-400', bubble: 'bg-gradient-to-r from-emerald-600/90 to-green-600/90', bg: 'from-emerald-500 via-green-500 to-teal-500' };
+    return { name: 'Instagram Direct Message', agent: 'KI-Agent (IG-Trigger)', icon: InstagramIcon, iconColor: 'text-pink-400', color: 'text-pink-400', bubble: 'bg-gradient-to-r from-pink-600/90 to-purple-600/90', bg: 'from-yellow-500 via-red-500 to-purple-500' };
+  };
+  const getBridgeUI = () => {
+    if (bridgePlatform === 'wa') return { name: 'WhatsApp Qualifizierung', agent: 'KI-Agent (WhatsApp-Hub)', icon: WhatsAppIcon, iconColor: 'text-emerald-400', color: 'text-emerald-400', bubble: 'bg-gradient-to-r from-emerald-600/90 to-green-600/90', bg: 'bg-emerald-500/20 border-emerald-500/30' };
+    if (bridgePlatform === 'dc') return { name: 'Discord Qualifizierung', agent: 'KI-Agent (Discord-Hub)', icon: DiscordIcon, iconColor: 'text-indigo-400', color: 'text-indigo-400', bubble: 'bg-gradient-to-r from-indigo-600/90 to-violet-600/90', bg: 'bg-indigo-500/20 border-indigo-500/30' };
+    return { name: 'Telegram Qualifizierung', agent: 'KI-Agent (Telegram-Hub)', icon: TelegramIcon, iconColor: 'text-sky-400', color: 'text-sky-400', bubble: 'bg-gradient-to-r from-cyan-600/90 to-sky-600/90', bg: 'bg-sky-500/20 border-sky-500/30' };
+  };
+  const getDestUI = () => {
+    if (destPlatform === 'pa') return { name: 'Patreon Chat', symbol: 'PA', agent: 'KI-Agent (Patreon)', color: 'text-orange-400', bubble: 'bg-gradient-to-r from-orange-600/90 to-red-600/90', bg: 'bg-orange-500/20 border-orange-500/30' };
+    return { name: 'OnlyFans Chat', symbol: 'OF', agent: 'KI-Agent (Julia)', color: 'text-sky-400', bubble: 'bg-gradient-to-r from-sky-600/90 to-blue-600/90', bg: 'bg-sky-500/20 border-sky-500/30' };
+  };
+
+  const sourceUI = getSourceUI();
+  const SourceIcon = sourceUI.icon;
+  const bridgeUI = getBridgeUI();
+  const BridgeIcon = bridgeUI.icon;
+  const destUI = getDestUI();
 
 
 
@@ -567,194 +592,217 @@ export default function App() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 relative z-10">
             
-            {/* Handy 1: Instagram DM */}
-            <div className="glass-panel rounded-[32px] border border-white/10 p-4 relative bg-neutral-950/40 shadow-2xl h-[480px] flex flex-col justify-between overflow-hidden group hover:border-white/20 transition-all duration-300">
-              {/* Notch / Phone Top */}
-              <div className="absolute top-2 left-1/2 -translate-x-1/2 w-28 h-4 bg-black rounded-full z-20 flex items-center justify-center">
-                <div className="w-2.5 h-2.5 rounded-full bg-neutral-850 ml-auto mr-4" />
-              </div>
-              
-              {/* Phone Header */}
-              <div className="pt-4 pb-2 border-b border-white/5 flex items-center gap-2">
-                <div className="h-7 w-7 rounded-full bg-gradient-to-tr from-yellow-500 via-red-500 to-purple-500 p-[1.5px] flex items-center justify-center">
-                  <div className="h-full w-full rounded-full bg-neutral-900 flex items-center justify-center text-[10px] text-pink-400 font-bold">
-                    <InstagramIcon className="h-3.5 w-3.5" />
-                  </div>
-                </div>
-                <div>
-                  <div className="font-syne font-semibold text-xs text-white flex items-center gap-1">
-                    Julia Summer <span className="h-1.5 w-1.5 bg-emerald-500 rounded-full" />
-                  </div>
-                  <div className="font-manrope text-[9px] text-neutral-505 flex items-center gap-1">Instagram Direct Message</div>
-                </div>
-              </div>
+            {/* Handy 1: Source DM */}
+            <div className="flex flex-col gap-4">
+              <select value={sourcePlatform} onChange={(e) => setSourcePlatform(e.target.value)} className="bg-neutral-900/80 border border-white/10 rounded-full px-4 py-2 text-xs text-white font-manrope outline-none cursor-pointer self-center focus:border-white/30 transition-all hover:bg-neutral-800 shadow-xl">
+                <option value="ig">Traffic: Instagram</option>
+                <option value="tw">Traffic: Twitter (X)</option>
+                <option value="wa">Traffic: WhatsApp</option>
+              </select>
 
-              {/* Message Feed */}
-              <div className="flex-1 py-4 overflow-y-auto space-y-3.5 text-xs text-left font-manrope">
-                <div className="text-center text-[9px] text-neutral-600">Heute</div>
+              <div className="glass-panel rounded-[32px] border border-white/10 p-4 relative bg-neutral-950/40 shadow-2xl h-[480px] flex flex-col justify-between overflow-hidden group hover:border-white/20 transition-all duration-300">
+                {/* Notch / Phone Top */}
+                <div className="absolute top-2 left-1/2 -translate-x-1/2 w-28 h-4 bg-black rounded-full z-20 flex items-center justify-center">
+                  <div className="w-2.5 h-2.5 rounded-full bg-neutral-850 ml-auto mr-4" />
+                </div>
                 
-                {/* Lead Message */}
-                <div className="flex flex-col items-start space-y-1 max-w-[80%]">
-                  <span className="text-[8px] text-neutral-500 pl-2">Lead</span>
-                  <div className="bg-neutral-800/80 text-neutral-200 rounded-2xl rounded-tl-none px-3.5 py-2">
-                    Kann ich mehr von dir sehen?
+                {/* Phone Header */}
+                <div className="pt-4 pb-2 border-b border-white/5 flex items-center gap-2">
+                  <div className={`h-7 w-7 rounded-full bg-gradient-to-tr ${sourceUI.bg} p-[1.5px] flex items-center justify-center`}>
+                    <div className={`h-full w-full rounded-full bg-neutral-900 flex items-center justify-center text-[10px] ${sourceUI.iconColor} font-bold`}>
+                      <SourceIcon className="h-3.5 w-3.5" />
+                    </div>
                   </div>
-                  <span className="text-[8px] text-neutral-600 pl-2">14:02</span>
+                  <div>
+                    <div className="font-syne font-semibold text-xs text-white flex items-center gap-1">
+                      Julia Summer <span className="h-1.5 w-1.5 bg-emerald-500 rounded-full" />
+                    </div>
+                    <div className="font-manrope text-[9px] text-neutral-505 flex items-center gap-1">{sourceUI.name}</div>
+                  </div>
                 </div>
 
-                {/* Bot Message */}
-                <div className="flex flex-col items-end space-y-1 max-w-[80%] ml-auto">
-                  <span className="text-[8px] text-pink-400 pr-2">KI-Agent (IG-Trigger)</span>
-                  <div className="bg-gradient-to-r from-pink-600/90 to-purple-600/90 text-white rounded-2xl rounded-tr-none px-3.5 py-2">
-                    Ja, sicher, gerne. Folg mir auf Telegram: <span className="underline cursor-pointer">t.me/julia_vip_bot</span> 🤫
+                {/* Message Feed */}
+                <div className="flex-1 py-4 overflow-y-auto space-y-3.5 text-xs text-left font-manrope">
+                  <div className="text-center text-[9px] text-neutral-600">Heute</div>
+                  
+                  {/* Lead Message */}
+                  <div className="flex flex-col items-start space-y-1 max-w-[80%]">
+                    <span className="text-[8px] text-neutral-500 pl-2">Lead</span>
+                    <div className="bg-neutral-800/80 text-neutral-200 rounded-2xl rounded-tl-none px-3.5 py-2">
+                      Kann ich mehr von dir sehen?
+                    </div>
+                    <span className="text-[8px] text-neutral-600 pl-2">14:02</span>
                   </div>
-                  <span className="text-[8px] text-neutral-600 pr-2">14:02</span>
-                </div>
-              </div>
 
-              {/* Phone Footer Input */}
-              <div className="border-t border-white/5 pt-2 flex items-center justify-between text-neutral-550 text-[10px] font-manrope">
-                <div className="flex items-center gap-2 bg-white/5 border border-white/5 rounded-full px-3 py-1.5 w-full">
-                  <span className="flex-1 text-left text-neutral-400">Nachricht schreiben...</span>
-                  <Send className="h-3 w-3 text-neutral-400" />
+                  {/* Bot Message */}
+                  <div className="flex flex-col items-end space-y-1 max-w-[80%] ml-auto">
+                    <span className={`text-[8px] ${sourceUI.color} pr-2`}>{sourceUI.agent}</span>
+                    <div className={`${sourceUI.bubble} text-white rounded-2xl rounded-tr-none px-3.5 py-2`}>
+                      Ja, sicher, gerne. Folg mir auf {bridgeUI.name.split(' ')[0]}: <span className="underline cursor-pointer">Link</span> 🤫
+                    </div>
+                    <span className="text-[8px] text-neutral-600 pr-2">14:02</span>
+                  </div>
+                </div>
+
+                {/* Phone Footer Input */}
+                <div className="border-t border-white/5 pt-2 flex items-center justify-between text-neutral-550 text-[10px] font-manrope">
+                  <div className="flex items-center gap-2 bg-white/5 border border-white/5 rounded-full px-3 py-1.5 w-full">
+                    <span className="flex-1 text-left text-neutral-400">Nachricht schreiben...</span>
+                    <Send className="h-3 w-3 text-neutral-400" />
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Handy 2: Telegram Chat */}
-            <div className="glass-panel rounded-[32px] border border-white/10 p-4 relative bg-neutral-950/40 shadow-2xl h-[480px] flex flex-col justify-between overflow-hidden group hover:border-white/20 transition-all duration-300">
-              {/* Notch */}
-              <div className="absolute top-2 left-1/2 -translate-x-1/2 w-28 h-4 bg-black rounded-full z-20 flex items-center justify-center">
-                <div className="w-2.5 h-2.5 rounded-full bg-neutral-850 ml-auto mr-4" />
-              </div>
-              
-              {/* Phone Header */}
-              <div className="pt-4 pb-2 border-b border-white/5 flex items-center gap-2">
-                <div className="h-7 w-7 rounded-full bg-sky-500/20 flex items-center justify-center text-sky-400 text-xs font-bold border border-sky-500/30">
-                  <TelegramIcon className="h-3.5 w-3.5" />
-                </div>
-                <div>
-                  <div className="font-syne font-semibold text-xs text-white flex items-center gap-1">
-                    Julia Exclusive VIP 🌟 <span className="h-1.5 w-1.5 bg-emerald-500 rounded-full animate-pulse" />
-                  </div>
-                  <div className="font-manrope text-[9px] text-neutral-500">Telegram Qualifizierung</div>
-                </div>
-              </div>
+            {/* Handy 2: Bridge Chat */}
+            <div className="flex flex-col gap-4">
+              <select value={bridgePlatform} onChange={(e) => setBridgePlatform(e.target.value)} className="bg-neutral-900/80 border border-white/10 rounded-full px-4 py-2 text-xs text-white font-manrope outline-none cursor-pointer self-center focus:border-white/30 transition-all hover:bg-neutral-800 shadow-xl">
+                <option value="tg">Bridge: Telegram</option>
+                <option value="wa">Bridge: WhatsApp</option>
+                <option value="dc">Bridge: Discord</option>
+              </select>
 
-              {/* Message Feed (Telegram Conversation Flow) */}
-              <div className="flex-1 py-4 overflow-y-auto space-y-2.5 text-[10px] text-left font-manrope">
-                <div className="text-center text-[8px] text-neutral-600">Telegram Session gestartet</div>
+              <div className="glass-panel rounded-[32px] border border-white/10 p-4 relative bg-neutral-950/40 shadow-2xl h-[480px] flex flex-col justify-between overflow-hidden group hover:border-white/20 transition-all duration-300">
+                {/* Notch */}
+                <div className="absolute top-2 left-1/2 -translate-x-1/2 w-28 h-4 bg-black rounded-full z-20 flex items-center justify-center">
+                  <div className="w-2.5 h-2.5 rounded-full bg-neutral-850 ml-auto mr-4" />
+                </div>
                 
-                {/* Msg 1: Lead */}
-                <div className="flex flex-col items-start space-y-0.5 max-w-[85%]">
-                  <span className="text-[8px] text-neutral-500 pl-2">Lead</span>
-                  <div className="bg-neutral-800 text-neutral-200 rounded-xl rounded-tl-none px-2.5 py-1">
-                    Ja, hab dich hier gefunden. Kann ich denn hier mehr von dir sehen?
+                {/* Phone Header */}
+                <div className="pt-4 pb-2 border-b border-white/5 flex items-center gap-2">
+                  <div className={`h-7 w-7 rounded-full ${bridgeUI.bg} flex items-center justify-center ${bridgeUI.iconColor} text-xs font-bold border`}>
+                    <BridgeIcon className="h-3.5 w-3.5" />
+                  </div>
+                  <div>
+                    <div className="font-syne font-semibold text-xs text-white flex items-center gap-1">
+                      Julia Exclusive VIP 🌟 <span className="h-1.5 w-1.5 bg-emerald-500 rounded-full animate-pulse" />
+                    </div>
+                    <div className="font-manrope text-[9px] text-neutral-500">{bridgeUI.name}</div>
                   </div>
                 </div>
 
-                {/* Msg 2: Bot */}
-                <div className="flex flex-col items-end space-y-0.5 max-w-[85%] ml-auto">
-                  <span className="text-[8px] text-sky-400 pr-2">KI-Agent (Telegram-Hub)</span>
-                  <div className="bg-gradient-to-r from-cyan-600/90 to-sky-600/90 text-white rounded-xl rounded-tr-none px-2.5 py-1">
-                    Hey! Schön, dass du den Weg hierher gefunden hast. Ja, hier auf Telegram bin ich viel aktiver und kann dir auch Sprachnachrichten schicken. 😉
+                {/* Message Feed */}
+                <div className="flex-1 py-4 overflow-y-auto space-y-2.5 text-[10px] text-left font-manrope">
+                  <div className="text-center text-[8px] text-neutral-600">Session gestartet</div>
+                  
+                  {/* Msg 1 */}
+                  <div className="flex flex-col items-start space-y-0.5 max-w-[85%]">
+                    <span className="text-[8px] text-neutral-500 pl-2">Lead</span>
+                    <div className="bg-neutral-800 text-neutral-200 rounded-xl rounded-tl-none px-2.5 py-1">
+                      Ja, hab dich hier gefunden. Kann ich denn hier mehr von dir sehen?
+                    </div>
+                  </div>
+
+                  {/* Msg 2 */}
+                  <div className="flex flex-col items-end space-y-0.5 max-w-[85%] ml-auto">
+                    <span className={`text-[8px] ${bridgeUI.color} pr-2`}>{bridgeUI.agent}</span>
+                    <div className={`${bridgeUI.bubble} text-white rounded-xl rounded-tr-none px-2.5 py-1`}>
+                      Hey! Schön, dass du den Weg hierher gefunden hast. Ja, hier bin ich viel aktiver und kann dir auch Sprachnachrichten schicken. 😉
+                    </div>
+                  </div>
+
+                  {/* Msg 3 */}
+                  <div className="flex flex-col items-start space-y-0.5 max-w-[85%]">
+                    <span className="text-[8px] text-neutral-500 pl-2">Lead</span>
+                    <div className="bg-neutral-800 text-neutral-200 rounded-xl rounded-tl-none px-2.5 py-1">
+                      Voll gut! Postest du hier auch exklusivere Fotos/Videos?
+                    </div>
+                  </div>
+
+                  {/* Msg 4 */}
+                  <div className="flex flex-col items-end space-y-0.5 max-w-[85%] ml-auto">
+                    <span className={`text-[8px] ${bridgeUI.color} pr-2`}>{bridgeUI.agent}</span>
+                    <div className={`${bridgeUI.bubble} text-white rounded-xl rounded-tr-none px-2.5 py-1`}>
+                      Ja, auf jeden Fall! Ich liebe es, privateren Content zu teilen. Aber sag mal: Wie alt bist du eigentlich und woher kommst du? 😇
+                    </div>
+                  </div>
+
+                  {/* Msg 5 */}
+                  <div className="flex flex-col items-start space-y-0.5 max-w-[85%]">
+                    <span className="text-[8px] text-neutral-500 pl-2">Lead</span>
+                    <div className="bg-neutral-800 text-neutral-200 rounded-xl rounded-tl-none px-2.5 py-1">
+                      Bin 24 und komme aus München! Und du?
+                    </div>
+                  </div>
+
+                  {/* Msg 6 */}
+                  <div className="flex flex-col items-end space-y-0.5 max-w-[85%] ml-auto">
+                    <span className={`text-[8px] ${bridgeUI.color} pr-2`}>{bridgeUI.agent}</span>
+                    <div className={`${bridgeUI.bubble} text-white rounded-xl rounded-tr-none px-2.5 py-1`}>
+                      Ich bin auch oft in der Gegend! Hier ist mein exklusiver Einladungslink für dich: Link 💋
+                    </div>
                   </div>
                 </div>
 
-                {/* Msg 3: Lead */}
-                <div className="flex flex-col items-start space-y-0.5 max-w-[85%]">
-                  <span className="text-[8px] text-neutral-500 pl-2">Lead</span>
-                  <div className="bg-neutral-800 text-neutral-200 rounded-xl rounded-tl-none px-2.5 py-1">
-                    Voll gut! Postest du hier auch exklusivere Fotos/Videos?
+                {/* Phone Footer Input */}
+                <div className="border-t border-white/5 pt-2 flex items-center justify-between text-neutral-550 text-[10px] font-manrope">
+                  <div className="flex items-center gap-2 bg-white/5 border border-white/5 rounded-full px-3 py-1.5 w-full">
+                    <span className="flex-1 text-left text-neutral-400">Schreibe eine Nachricht...</span>
+                    <Send className="h-3 w-3 text-neutral-400" />
                   </div>
-                </div>
-
-                {/* Msg 4: Bot */}
-                <div className="flex flex-col items-end space-y-0.5 max-w-[85%] ml-auto">
-                  <span className="text-[8px] text-sky-400 pr-2">KI-Agent (Telegram-Hub)</span>
-                  <div className="bg-gradient-to-r from-cyan-600/90 to-sky-600/90 text-white rounded-xl rounded-tr-none px-2.5 py-1">
-                    Ja, auf jeden Fall! Ich liebe es, privateren Content zu teilen. Aber sag mal: Wie alt bist du eigentlich und woher kommst du? 😇
-                  </div>
-                </div>
-
-                {/* Msg 5: Lead */}
-                <div className="flex flex-col items-start space-y-0.5 max-w-[85%]">
-                  <span className="text-[8px] text-neutral-500 pl-2">Lead</span>
-                  <div className="bg-neutral-800 text-neutral-200 rounded-xl rounded-tl-none px-2.5 py-1">
-                    Bin 24 und komme aus München! Und du?
-                  </div>
-                </div>
-
-                {/* Msg 6: Bot */}
-                <div className="flex flex-col items-end space-y-0.5 max-w-[85%] ml-auto">
-                  <span className="text-[8px] text-sky-400 pr-2">KI-Agent (Telegram-Hub)</span>
-                  <div className="bg-gradient-to-r from-cyan-600/90 to-sky-600/90 text-white rounded-xl rounded-tr-none px-2.5 py-1">
-                    Ich bin auch oft in der Gegend! Hier ist mein exklusiver Einladungslink für dich: onlyfans.com/julia_vip 💋
-                  </div>
-                </div>
-              </div>
-
-              {/* Phone Footer Input */}
-              <div className="border-t border-white/5 pt-2 flex items-center justify-between text-neutral-550 text-[10px] font-manrope">
-                <div className="flex items-center gap-2 bg-white/5 border border-white/5 rounded-full px-3 py-1.5 w-full">
-                  <span className="flex-1 text-left text-neutral-400">Schreibe eine Nachricht...</span>
-                  <Send className="h-3 w-3 text-neutral-400" />
                 </div>
               </div>
             </div>
 
-            {/* Handy 3: OnlyFans Conversion */}
-            <div className="glass-panel rounded-[32px] border border-white/10 p-4 relative bg-neutral-950/40 shadow-2xl h-[480px] flex flex-col justify-between overflow-hidden group hover:border-white/20 transition-all duration-300">
-              {/* Notch */}
-              <div className="absolute top-2 left-1/2 -translate-x-1/2 w-28 h-4 bg-black rounded-full z-20 flex items-center justify-center">
-                <div className="w-2.5 h-2.5 rounded-full bg-neutral-850 ml-auto mr-4" />
-              </div>
-              
-              {/* Phone Header */}
-              <div className="pt-4 pb-2 border-b border-white/5 flex items-center gap-2">
-                <div className="h-7 w-7 rounded-full bg-sky-500/20 flex items-center justify-center text-sky-400 text-xs font-bold border border-sky-500/30">
-                  OF
+            {/* Handy 3: Conversion */}
+            <div className="flex flex-col gap-4">
+              <select value={destPlatform} onChange={(e) => setDestPlatform(e.target.value)} className="bg-neutral-900/80 border border-white/10 rounded-full px-4 py-2 text-xs text-white font-manrope outline-none cursor-pointer self-center focus:border-white/30 transition-all hover:bg-neutral-800 shadow-xl">
+                <option value="of">Conversion: OnlyFans</option>
+                <option value="pa">Conversion: Patreon</option>
+              </select>
+
+              <div className="glass-panel rounded-[32px] border border-white/10 p-4 relative bg-neutral-950/40 shadow-2xl h-[480px] flex flex-col justify-between overflow-hidden group hover:border-white/20 transition-all duration-300">
+                {/* Notch */}
+                <div className="absolute top-2 left-1/2 -translate-x-1/2 w-28 h-4 bg-black rounded-full z-20 flex items-center justify-center">
+                  <div className="w-2.5 h-2.5 rounded-full bg-neutral-850 ml-auto mr-4" />
                 </div>
-                <div>
-                  <div className="font-syne font-semibold text-xs text-white flex items-center gap-1">
-                    Julia Summer <span className="h-1.5 w-1.5 bg-emerald-500 rounded-full animate-pulse" />
+                
+                {/* Phone Header */}
+                <div className="pt-4 pb-2 border-b border-white/5 flex items-center gap-2">
+                  <div className={`h-7 w-7 rounded-full ${destUI.bg} flex items-center justify-center ${destUI.color} text-[10px] font-bold border`}>
+                    {destUI.symbol}
                   </div>
-                  <div className="font-manrope text-[9px] text-neutral-500">OnlyFans Chat</div>
-                </div>
-              </div>
-
-              {/* Message Feed / OnlyFans Chat */}
-              <div className="flex-1 py-4 overflow-y-auto space-y-3.5 text-xs text-left font-manrope">
-                {/* Lead Message */}
-                <div className="flex flex-col items-start space-y-1 max-w-[80%]">
-                  <span className="text-[8px] text-neutral-500 pl-2">Lead</span>
-                  <div className="bg-neutral-800/80 text-neutral-200 rounded-2xl rounded-tl-none px-3.5 py-2">
-                    Hallo, ich habe gerade von Telegram gefolgt
+                  <div>
+                    <div className="font-syne font-semibold text-xs text-white flex items-center gap-1">
+                      Julia Summer <span className="h-1.5 w-1.5 bg-emerald-500 rounded-full animate-pulse" />
+                    </div>
+                    <div className="font-manrope text-[9px] text-neutral-500">{destUI.name}</div>
                   </div>
-                  <span className="text-[8px] text-neutral-600 pl-2">14:04</span>
                 </div>
 
-                {/* Bot Message */}
-                <div className="flex flex-col items-end space-y-1 max-w-[80%] ml-auto">
-                  <span className="text-[8px] text-sky-400 pr-2">KI-Agent (Julia)</span>
-                  <div className="bg-gradient-to-r from-sky-600/90 to-blue-600/90 text-white rounded-2xl rounded-tr-none px-3.5 py-2">
-                    Ja, ich kann mich voll an dich erinnern, danke, dass du mir jetzt hier folgst. Jetzt kann ich dir auch mal was Cooles zeigen oder so. 😘
+                {/* Message Feed */}
+                <div className="flex-1 py-4 overflow-y-auto space-y-3.5 text-xs text-left font-manrope">
+                  {/* Lead Message */}
+                  <div className="flex flex-col items-start space-y-1 max-w-[80%]">
+                    <span className="text-[8px] text-neutral-500 pl-2">Lead</span>
+                    <div className="bg-neutral-800/80 text-neutral-200 rounded-2xl rounded-tl-none px-3.5 py-2">
+                      Hallo, ich bin gerade von {bridgeUI.name.split(' ')[0]} rübergekommen
+                    </div>
+                    <span className="text-[8px] text-neutral-600 pl-2">14:04</span>
                   </div>
-                  <span className="text-[8px] text-neutral-600 pr-2">14:04</span>
+
+                  {/* Bot Message */}
+                  <div className="flex flex-col items-end space-y-1 max-w-[80%] ml-auto">
+                    <span className={`text-[8px] ${destUI.color} pr-2`}>{destUI.agent}</span>
+                    <div className={`${destUI.bubble} text-white rounded-2xl rounded-tr-none px-3.5 py-2`}>
+                      Ja, ich kann mich voll an dich erinnern, danke, dass du mir jetzt hier folgst. Jetzt kann ich dir auch mal was Cooles zeigen oder so. 😘
+                    </div>
+                    <span className="text-[8px] text-neutral-600 pr-2">14:04</span>
+                  </div>
+
+                  {/* Conversion Event */}
+                  <div className="mx-auto max-w-[95%] bg-emerald-500/5 border border-emerald-500/10 rounded-xl p-2.5 text-center text-[10px] text-emerald-400 font-semibold flex items-center justify-center gap-1.5 mt-4">
+                    <Check className="h-3.5 w-3.5" />
+                    <span>Lead konvertiert (+25,00 € Subscription)</span>
+                  </div>
                 </div>
 
-                {/* Conversion Event */}
-                <div className="mx-auto max-w-[95%] bg-emerald-500/5 border border-emerald-500/10 rounded-xl p-2.5 text-center text-[10px] text-emerald-400 font-semibold flex items-center justify-center gap-1.5">
-                  <Check className="h-3.5 w-3.5" />
-                  <span>Lead konvertiert (+25,00 € Subscription)</span>
-                </div>
-              </div>
-
-              {/* Phone Footer Input */}
-              <div className="border-t border-white/5 pt-2 flex items-center justify-between text-neutral-550 text-[10px] font-manrope">
-                <div className="flex items-center gap-2 bg-white/5 border border-white/5 rounded-full px-3 py-1.5 w-full">
-                  <span className="flex-1 text-left text-neutral-400">Nachricht schreiben...</span>
-                  <Send className="h-3 w-3 text-neutral-400" />
+                {/* Phone Footer Input */}
+                <div className="border-t border-white/5 pt-2 flex items-center justify-between text-neutral-550 text-[10px] font-manrope">
+                  <div className="flex items-center gap-2 bg-white/5 border border-white/5 rounded-full px-3 py-1.5 w-full">
+                    <span className="flex-1 text-left text-neutral-400">Nachricht schreiben...</span>
+                    <Send className="h-3 w-3 text-neutral-400" />
+                  </div>
                 </div>
               </div>
             </div>
@@ -1088,7 +1136,7 @@ export default function App() {
                   </button>
                 </div>
                 <p className="text-[10px] text-neutral-500 font-manrope leading-normal">
-                  Ideal für Creators: Wir schreiben jeden Tag alle deine Kunden automatisiert an (als Flatrate abgedeckt).
+                  Massen-Nachrichten werden automatisch an alle Chats vergeben, die bereits existieren, für 149 Euro im Monat.
                 </p>
               </div>
             </div>
