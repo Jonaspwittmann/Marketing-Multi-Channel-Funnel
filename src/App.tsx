@@ -1049,7 +1049,7 @@ export default function App() {
                     <div className="flex justify-between border-b border-white/5 pb-2.5">
                       <span className="text-neutral-400 font-medium flex justify-between w-full">
                         <span>Laufend: Bot-Textnachrichten · 0,05 € / Msg</span>
-                        <span className="text-neutral-500 font-normal">× {costs.totalMessages.toLocaleString('de-DE')} Msgs</span>
+                        <span className="text-neutral-500 font-normal">× {costs.totalMessages.toLocaleString('de-DE')}</span>
                       </span>
                       <span className="font-semibold text-white">{costs.messageCost.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })}</span>
                     </div>
@@ -1088,7 +1088,7 @@ export default function App() {
                       <div className="flex justify-between border-b border-white/5 pb-2.5">
                         <span className="text-neutral-400 flex justify-between w-full">
                           <span>Laufend: Voice-Generierung · 0,20 € / 10 Sek.</span>
-                          <span className="text-neutral-500 font-normal">× {costs.voiceTotalMessages.toLocaleString('de-DE')} Msgs</span>
+                          <span className="text-neutral-500 font-normal">× {costs.voiceTotalMessages.toLocaleString('de-DE')}</span>
                         </span>
                         <span className="font-semibold text-white">{costs.voiceCost.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' })}</span>
                       </div>
