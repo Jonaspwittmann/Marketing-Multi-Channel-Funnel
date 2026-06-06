@@ -845,7 +845,7 @@ export default function App() {
                     <input 
                       type="number" 
                       min="1" 
-                      max="100000" 
+                      max="5000" 
                       value={monthlyDMs} 
                       onChange={(e) => {
                         const valStr = e.target.value;
@@ -870,7 +870,7 @@ export default function App() {
                 <input 
                   type="range" 
                   min="1" 
-                  max="100000" 
+                  max="5000" 
                   step="10"
                   value={typeof monthlyDMs === 'number' ? monthlyDMs : 1} 
                   onChange={(e) => setMonthlyDMs(Number(e.target.value))}
