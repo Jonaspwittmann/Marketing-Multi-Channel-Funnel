@@ -1439,10 +1439,10 @@ export default function App() {
             <div className="glass-panel border border-white/5 rounded-2xl p-6 space-y-3 hover:scale-[1.02] transition-transform duration-300">
               <h4 className="text-white font-syne font-semibold text-lg flex items-center gap-2">
                 <ShieldCheck className="h-5 w-5 text-emerald-400" />
-                Ist mein Instagram sicher vor Bans?
+                Sind meine Accounts sicher vor Bans?
               </h4>
               <p className="text-neutral-400 font-manrope text-sm leading-relaxed">
-                Absolut. Wir nutzen keine billigen Scraping-Bots. Unsere Systeme sind direkt an offizielle APIs angebunden oder verwenden hochkomplexe, menschlich agierende Interfaces (inkl. Tipp-Verzögerungen). So bleibt dein Account 100% sicher.
+                Abhängig davon, wie das Setup des Kunden aktuell aussieht, stellen wir die passende Infrastruktur zur Verfügung. Eine 100%ige Bann-Garantie können wir jedoch nicht versprechen. Wir garantieren lediglich ein Setup, bei dem die Bann-Wahrscheinlichkeit extrem gering ist, da wir die modernsten Bridges und Reverse-Engineering-Technologien nutzen – mehr aber nicht.
               </p>
             </div>
             
