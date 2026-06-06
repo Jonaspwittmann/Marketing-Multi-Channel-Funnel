@@ -249,14 +249,14 @@ const BigFunnelTrichter = ({ selectedChannels, setSelectedChannels, hubChannel, 
 
   return (
     <div className="w-full max-w-4xl mx-auto my-12 glass-panel rounded-3xl border border-white/5 p-4 sm:p-8 relative overflow-hidden bg-neutral-950/40 animate-fade-in">
-      <div className="absolute top-0 right-0 p-4 text-[10px] uppercase font-bold tracking-widest text-neutral-500">Funnel Architektur</div>
+      <div className="absolute top-0 right-0 p-2 sm:p-4 text-[8px] sm:text-[10px] uppercase font-bold tracking-widest text-neutral-500 hidden sm:block">Funnel Architektur</div>
       
       <div className="flex flex-col items-center space-y-8 relative">
         
         {/* Tier 1: Social Media Sources */}
         <div className="w-full">
-          <div className="text-center text-[10px] text-neutral-505 uppercase tracking-widest font-semibold mb-4">1. Traffic-Quellen (Social Media) zum Aktivieren anklicken</div>
-          <div className="flex flex-wrap justify-center gap-2.5">
+          <div className="text-center text-[9px] sm:text-[10px] text-neutral-505 uppercase tracking-widest font-semibold mb-4 px-2">1. Traffic-Quellen (Social Media) zum Aktivieren anklicken</div>
+          <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2.5">
             {channels.map((sm) => {
               const IconComponent = sm.icon;
               const isSelected = selectedChannels.includes(sm.id);
@@ -264,13 +264,13 @@ const BigFunnelTrichter = ({ selectedChannels, setSelectedChannels, hubChannel, 
                 <button
                   key={sm.id}
                   onClick={() => toggleChannel(sm.id)}
-                  className={`flex flex-col items-center justify-center border px-2 sm:px-3 py-2 rounded-xl gap-1 transition-all duration-300 min-w-[70px] sm:min-w-[95px] cursor-pointer ${
+                  className={`flex flex-col items-center justify-center border px-1.5 sm:px-3 py-1.5 sm:py-2 rounded-xl gap-0.5 sm:gap-1 transition-all duration-300 min-w-[58px] sm:min-w-[95px] cursor-pointer ${
                     isSelected ? sm.activeColor : sm.inactiveColor
                   }`}
                 >
-                  <IconComponent className="h-4.5 w-4.5" />
-                  <span className={`font-syne font-semibold text-[9px] ${isSelected ? 'text-white' : 'text-neutral-450'}`}>{sm.name}</span>
-                  <span className={`text-[7px] font-bold tracking-wider uppercase ${isSelected ? 'text-emerald-400 font-extrabold' : 'text-neutral-550'}`}>
+                  <IconComponent className="h-3.5 w-3.5 sm:h-4.5 sm:w-4.5" />
+                  <span className={`font-syne font-semibold text-[7px] sm:text-[9px] ${isSelected ? 'text-white' : 'text-neutral-450'}`}>{sm.name}</span>
+                  <span className={`text-[6px] sm:text-[7px] font-bold tracking-wider uppercase ${isSelected ? 'text-emerald-400 font-extrabold' : 'text-neutral-550'}`}>
                     {isSelected ? 'Aktiv ●' : '+300 € Setup'}
                   </span>
                 </button>
@@ -554,12 +554,12 @@ export default function App() {
 
 
   return (
-    <div className="min-h-screen bg-transparent selection:bg-white selection:text-black">
+    <div className="min-h-screen bg-transparent selection:bg-white selection:text-black overflow-x-hidden">
       
       {/* Background decoration elements */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-white/[0.01] rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute top-[80vh] right-1/4 w-[500px] h-[500px] bg-white/[0.01] rounded-full blur-[150px] pointer-events-none" />
-      <div className="absolute top-[180vh] left-1/3 w-96 h-96 bg-white/[0.01] rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-0 left-1/4 w-48 sm:w-96 h-48 sm:h-96 bg-white/[0.01] rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-[80vh] right-1/4 w-48 sm:w-[500px] h-48 sm:h-[500px] bg-white/[0.01] rounded-full blur-[150px] pointer-events-none" />
+      <div className="absolute top-[180vh] left-1/3 w-48 sm:w-96 h-48 sm:h-96 bg-white/[0.01] rounded-full blur-[120px] pointer-events-none" />
 
       {/* Navigation Header */}
       <header className="sticky top-0 z-50 w-full glass-panel border-b border-white/5 py-2.5 px-4 md:px-8 flex justify-between items-center transition-all duration-300">
@@ -621,10 +621,10 @@ export default function App() {
           </div>
 
           {/* 3 Handys Side-by-Side mit Flow-Visualisierung */}
-          <div className="relative max-w-6xl mx-auto pt-4 pb-6 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+          <div className="relative max-w-6xl mx-auto pt-4 pb-6 animate-fade-in-up overflow-hidden" style={{ animationDelay: '0.3s' }}>
             
             <div className="flex justify-center mb-10 relative z-20">
-              <div className="bg-neutral-900/80 backdrop-blur-md border border-white/10 rounded-full px-5 py-2 flex items-center gap-2 text-xs md:text-sm font-manrope text-neutral-400 shadow-[0_0_15px_rgba(255,255,255,0.05)]">
+              <div className="bg-neutral-900/80 backdrop-blur-md border border-white/10 rounded-2xl sm:rounded-full px-4 sm:px-5 py-2 flex items-center gap-2 text-[10px] sm:text-xs md:text-sm font-manrope text-neutral-400 shadow-[0_0_15px_rgba(255,255,255,0.05)] text-center sm:text-left">
                 <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
                 <span><span className="text-white font-semibold">Dynamische Workflows:</span> Verbinde jeden Messenger beliebig (z.B. Instagram ↔ WhatsApp).</span>
               </div>
@@ -658,7 +658,7 @@ export default function App() {
             
             {/* Handy 1: Source DM */}
             <div className="flex flex-col gap-4">
-              <div className="glass-panel rounded-[32px] border border-white/10 p-4 relative bg-neutral-950/40 shadow-2xl h-[480px] flex flex-col justify-between overflow-hidden group hover:border-white/20 transition-all duration-300">
+              <div className="glass-panel rounded-[32px] border border-white/10 p-3 sm:p-4 relative bg-neutral-950/40 shadow-2xl h-[400px] sm:h-[480px] flex flex-col justify-between overflow-hidden group hover:border-white/20 transition-all duration-300">
                 {/* Notch / Phone Top */}
                 <div className="absolute top-2 left-1/2 -translate-x-1/2 w-28 h-4 bg-black rounded-full z-20 flex items-center justify-center">
                   <div className="w-2.5 h-2.5 rounded-full bg-neutral-850 ml-auto mr-4" />
@@ -714,7 +714,7 @@ export default function App() {
 
             {/* Handy 2: Bridge Chat */}
             <div className="flex flex-col gap-4">
-              <div className="glass-panel rounded-[32px] border border-white/10 p-4 relative bg-neutral-950/40 shadow-2xl h-[480px] flex flex-col justify-between overflow-hidden group hover:border-white/20 transition-all duration-300">
+              <div className="glass-panel rounded-[32px] border border-white/10 p-3 sm:p-4 relative bg-neutral-950/40 shadow-2xl h-[400px] sm:h-[480px] flex flex-col justify-between overflow-hidden group hover:border-white/20 transition-all duration-300">
                 {/* Notch */}
                 <div className="absolute top-2 left-1/2 -translate-x-1/2 w-28 h-4 bg-black rounded-full z-20 flex items-center justify-center">
                   <div className="w-2.5 h-2.5 rounded-full bg-neutral-850 ml-auto mr-4" />
@@ -798,7 +798,7 @@ export default function App() {
 
             {/* Handy 3: Conversion */}
             <div className="flex flex-col gap-4">
-              <div className="glass-panel rounded-[32px] border border-white/10 p-4 relative bg-neutral-950/40 shadow-2xl h-[480px] flex flex-col justify-between overflow-hidden group hover:border-white/20 transition-all duration-300">
+              <div className="glass-panel rounded-[32px] border border-white/10 p-3 sm:p-4 relative bg-neutral-950/40 shadow-2xl h-[400px] sm:h-[480px] flex flex-col justify-between overflow-hidden group hover:border-white/20 transition-all duration-300">
                 {/* Notch */}
                 <div className="absolute top-2 left-1/2 -translate-x-1/2 w-28 h-4 bg-black rounded-full z-20 flex items-center justify-center">
                   <div className="w-2.5 h-2.5 rounded-full bg-neutral-850 ml-auto mr-4" />
